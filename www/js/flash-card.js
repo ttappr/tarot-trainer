@@ -15,13 +15,11 @@ class FlashCard extends HTMLElement {
                 _reverse : this.getAttribute('reverse')  || reverse
             });
 
-        console.info(CARD_DATA);
-
         this.attachShadow({mode: 'open'});
 
         let image = new Image();
         if (this._img) {
-            image.src = this._img;
+            image.src = "img/" + this._img;
         }
         this.shadowRoot.append(image);
         this.shadowRoot.append(new Text(this.getAttribute("question")));
@@ -41,11 +39,14 @@ class FlashCard extends HTMLElement {
 }
 
 class FlashCardDeck extends HTMLElement {
-    constructor(dataURL) {
+    constructor() {
         super();
         this.attachShadow({mode: 'open'});
-        dataURL = dataURL || this.getAttribute('data');
-        console.info(CARD_DATA)
+        this._cards = [];
+        for (let obj of CARD_DATA) {
+            this._cards.push(new FlashCard(...Object.values(obj)));
+        }
+        console.info(this._cards);
     }
 }
 
