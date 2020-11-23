@@ -2,29 +2,30 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="Content-Security-Policy" 
-            content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <meta http-equiv="Content-Security-Policy" content=
+        "script-src * data: https://ssl.gstatic.com 'unsafe-inline' 'unsafe-eval';
+         default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval';
+         style-src 'self' 'unsafe-inline';
+         media-src *; 
+         img-src 'self' data: content:;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" 
             content="initial-scale=1, width=device-width, viewport-fit=cover">
         <meta name="color-scheme" content="light dark">
-        <link rel="stylesheet" href="css/index.css">
-        <title>Hello World</title>
+        <!-- <link rel="stylesheet" href="css/index.css"> -->
+        <title>Tarot Trainer</title>
     </head>
     <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script src="cordova.js"></script>
-        <script src="js/index.js"></script>
-        <script type="text/javascript" src=./js/card-data.js></script>
+        <!-- <script src="cordova.js"></script> -->
+
+        <script type="text/javascript" src="./js/card-data.js"></script>
         <script type="text/javascript" src="./js/flash-card.js"></script>
-        <!-- <script type="module" src="./js/flash-card.js"></script> -->
-        <flash-card-deck data="./js/card-data.json"></flash-card-deck>
+
+        <flash-card-deck id="deck"></flash-card-deck>
+        <script>
+            var fcd = document.getElementById("deck");
+        </script>
+        <button onclick="fcd.pickRandom()">next</button>
     </body>
 </html>
