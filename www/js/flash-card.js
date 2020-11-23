@@ -61,8 +61,7 @@ class FlashCardDeck extends HTMLElement {
     
     _getFile(fs, path) {
         return new Promise((resolve, reject) => {
-            cordova.file.applicationDirectory.getFile(
-            //fs.root.getFile(
+            fs.root.getFile(
                 path, {create: false, exclusive: true},
                 (fileEntry) => {
                     return resolve(fileEntry);
@@ -78,15 +77,29 @@ class FlashCardDeck extends HTMLElement {
                 reader.onloaded = () => {
                     return resolve(this.result);
                 };
+                reader.onerror = () => {
+                    return reject(this.error);
+                };
                 reader.readAsText(file);
             }, (err) => {
                 return reject(err);
             });
         });
     }
+    _resolveLocalFSUrl(url) {
+        return new Promise((resolve, reject) => {
+            window.resolveLocalFileSystemURL(url, 
+                (fs) => {
+                    return resolve(fs);
+                }, (err) => {
+                    return reject(err);
+                });
+        });
+    }
 
     async loadJSON(path) {
-        let fs          = await this._reqFS();
+        let appBase     = cordova.file.applicationDirectory + "www/";
+        let fs          = await this._resolveLocalFSUrl(appBase);
         let fileEntry   = await this._getFile(fs, path);
         let text        = await this._getText(fileEntry);
         return JSON.parse(text);
