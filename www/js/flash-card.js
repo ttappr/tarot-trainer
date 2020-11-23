@@ -25,16 +25,12 @@ class FlashCard extends HTMLElement {
         this.shadowRoot.append(new Text(this.getAttribute("question")));
     }
     connectedCallback() {
-        super.connectedCallback();
     }
     disconnectedCallback() {
-        super.disconnectedCallback();
     }
     attributeChangedCallback(name, oldValue, newValue) {
-        super.attributeChangedCallback(name, oldValue, newValue);
     }
     adoptedCallback() {
-        super.adoptedCallback();
     }
 }
 
@@ -43,10 +39,16 @@ class FlashCardDeck extends HTMLElement {
         super();
         this.attachShadow({mode: 'open'});
         this._cards = [];
+        this._current = null;
+
         for (let obj of CARD_DATA) {
             this._cards.push(new FlashCard(...Object.values(obj)));
         }
         console.info(this._cards);
+    }
+    pickRandom() {
+        let idx = Math.floor(Math.random() * this._cards.length);
+        this.shadowRoot.replaceChild(this._cards[idx], this._current);
     }
 }
 
