@@ -156,7 +156,7 @@ const CARD_DATA = [
         value   : "Nine",
         pic     : "pictorial-key-to-the-tarot.045.jpg",
         descr   : "A goodly personage has feasted to his heart's content, and abundant refreshment of wine is on the arched counter behind him, seeming to indicate that the future is also assured. The picture offers the material side only, but there are other aspects.",
-        meaning : "Concord, contentment, physical<em>bien-être</em>; also victory, success, advantage; satisfaction for the Querent or person for whom the consultation is made.",
+        meaning : "Concord, contentment, physical <em>bien-être</em>; also victory, success, advantage; satisfaction for the Querent or person for whom the consultation is made.",
         reverse : "Truth, loyalty, liberty; but the readings vary and include mistakes, imperfections, etc."
     },
     {
