@@ -1,9 +1,9 @@
 
 /**
- * Source in ROUND_METER_HTML adapted from 
+ * Source in ROUND_GAUGE_HTML adapted from 
  *      https://css-tricks.com/html5-meter-element/
  */
-const ROUND_METER_HTML = `
+const ROUND_GAUGE_HTML = `
     <style>
         /* Custom properties supported by the round-meter element.
          * The values in :host hold the default values.
@@ -75,11 +75,11 @@ const ROUND_METER_HTML = `
     </div>
 `;
 
-class RoundMeter extends HTMLElement {
+class RoundGauge extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
-        this.shadowRoot.innerHTML = ROUND_METER_HTML;
+        this.shadowRoot.innerHTML = ROUND_GAUGE_HTML;
         this._gauge = this.shadowRoot.querySelector(".gauge");
         this._fill  = this.shadowRoot.querySelector(".gauge__fill");
         this._cover = this.shadowRoot.querySelector(".gauge__cover");
@@ -139,12 +139,12 @@ class RoundMeter extends HTMLElement {
             case "value" : this.value = newValue; break;
         }
         console.info(
-            `RoundMeter.attributeChanged(${name}, ${oldValue}, ${newValue})`);
+            `RoundGauge.attributeChanged(${name}, ${oldValue}, ${newValue})`);
     }
 }
 
 // Register the custom element.
-customElements.define("round-meter", RoundMeter);
+customElements.define("round-gauge", RoundGauge);
 
 /**
  * Notes: 
