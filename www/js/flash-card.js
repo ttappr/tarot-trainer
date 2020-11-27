@@ -156,34 +156,28 @@ class FlashCardDeck extends HTMLElement {
     }
 }
 
+/**
+ * Produces an array of cummulative values from the array of numbers passed in.
+ * 
+ * @param {number[]} numbers An array of numbers to accumulate.
+ * @returns {number[]} An array of accumulated values.
+ */
 function accumulate(numbers) {
     let accum = [];
     let total = 0;
-    for (n of numbers) {
+    for (let n of numbers) {
         total += n;
         accum.push(total);
     }
     return accum;
 }
-function accm(nums) {
-    return nums.reduce(
-                (accm, curr) => [accm[0] + curr, [...accm[1], curr + accm[0]]], 
-                [0, []])[1];
-}
 
-function sample(population, weights, k=1) {
-    let accum = accumulate(weights);
-    let total = accum[accum.length - 1];
-    let sampl = {};
-    let index = 0;
-    let randv = 0;
-    while (sampl.length < k) {
-        randv        = total * Math.random();
-        index        = accum.findIndex((elm) => randv <= elm);
-        sampl[index] = population[index];
-    }
-    return Object.values(sampl);
-}
+/**
+ * Randomly chooses one element from the population using the list of weights.
+ * 
+ * @param {Object[]} pop An array of objects to choose from.
+ * @param {number[]} wts An array containing the weight of each object.
+ */
 function wchoose(pop, wts) {
     let acm = accumulate(wts);
     let rnd = Math.random() * acm[acm.length - 1];
