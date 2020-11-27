@@ -5,6 +5,30 @@
     <link rel="stylesheet" href="./css/border-layout.css">
     <script type="text/javascript" src="./js/card-data.js"></script>
     <script type="text/javascript" src="./js/flash-card.js"></script>
+    <script type="text/javascript" src="./js/round-meter.js"></script>
+
+    <style>
+      @font-face {
+        font-family: IMFellGreatPrimer;
+        src: url(IMFellGreatPrimerSC-Regular.ttf);
+      }
+      @font-face {
+        font-family: HandTIMES;
+        src: url(HandTIMES.ttf);
+      }
+      @font-face {
+        font-family: Freeride;
+        src: url(Freeride.otf);
+      }
+      @font-face {
+        font-family: Jancient;
+        src: url(JANCIENT.TTF);
+      }
+      * {
+        font-family: Jancient;
+      }
+    </style>
+
   </head>
 <body>
 
@@ -14,6 +38,7 @@
 
 <div class="row">
   <div class="col-3 col-s-3 menu">
+    <round-meter value="0.25"></round-meter>
     <ul>
       <li>The Flight</li>
       <li>The City</li>

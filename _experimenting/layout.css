@@ -1,7 +1,7 @@
 
 /* Don't include borders, margins, etc in calculation of height and weight of
-   elements. */
-* {
+   elements. This may not be necessary or desirable. */
+   * {
     box-sizing: border-box;
   }
   .topbar {
@@ -32,8 +32,9 @@
   .aside {
     display: none;
     width: 25%;
-    background-color: green;
+    background-color: lightgray;
   }
+
   @media only screen and (min-width: 600px) {
     /* For tablets: */
     .aside { display: block; }
@@ -41,6 +42,23 @@
   
   @media only screen and (min-width: 768px) {
     /* For desktop: */
+  }
+
+  input#certainty {
+    height: 180px;
+    width: 150px;
+    transform: rotate(270deg);
+    display: block;
+    margin: auto;
+  }
+  div#certainty-meter {
+    padding-top: 20px;
+  }
+  meter#certainty {
+    display: block;
+    margin: auto;
+    height: 20px;
+    width: 80%;
   }
 
   

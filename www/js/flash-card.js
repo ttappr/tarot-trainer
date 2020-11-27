@@ -113,7 +113,9 @@ class FlashCardDeck extends HTMLElement {
                 #back {
                     width: 45%;
                     float: left;
-                    font: 1.2em "Fira Sans", sans-serif;
+                    //font: 1.7em Freeride, bold;
+                    font: 1.7em Jancient;
+                    //font: 1.2em "Fira Sans", sans-serif;
                 }
                 #clearfix {
                     clear: both;
