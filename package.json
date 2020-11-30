@@ -29,5 +29,8 @@
       "browser",
       "electron"
     ]
+  },
+  "dependencies": {
+    "eslint": "^7.14.0"
   }
 }

@@ -4,7 +4,9 @@
 /**
  * If the platform doesn't support WeakRef, provide a dummy stub for it.
  */
-if (typeof WeakRef === "undefined") {
+try { 
+    new WeakRef({});
+} catch (ReferenceError) {
     console.info("WeakRef is undefined for this platform. " +
                  "Using stub version instead.");
     WeakRef = class {
@@ -137,14 +139,27 @@ class FlashCardDeck extends HTMLElement {
         this.pickRandom();
     }
     /**
-     * Chooses a card at random and displays it.
+     * Returns the number of cards in the deck.
      */
-    pickRandom() {
-        let idx = Math.floor(Math.random() * this._cards.length);
+    get numCards() {
+        return this._cards.length;
+    }
+    /**
+     * Chooses a card at random and displays it.
+     * @param {number[]} weights An optional array of weights for each card.
+     */
+    pickRandom(weights) {
+        if (weights) {
+            var card = this._wchoose(this._cards, weights);
+        } else {
+            let idx = Math.floor(Math.random() * this._cards.length);
+            var card = this._cards[idx];
+        }
         let rev = Math.random() < 0.50;
-        let card = this._cards[idx];
         if (rev) { card.invert(); }
+
         let [face, back] = [card.face, card.back];
+
         if (this._current) {
             this._face.replaceChild(face, this._current.face);
             this._back.replaceChild(back, this._current.back);
@@ -154,35 +169,35 @@ class FlashCardDeck extends HTMLElement {
         }
         this._current = {face: face, back: back};
     }
-}
 
-/**
- * Produces an array of cummulative values from the array of numbers passed in.
- * 
- * @param {number[]} numbers An array of numbers to accumulate.
- * @returns {number[]} An array of accumulated values.
- */
-function accumulate(numbers) {
-    let accum = [];
-    let total = 0;
-    for (let n of numbers) {
-        total += n;
-        accum.push(total);
+    /**
+     * Produces an array of cummulative values from the array of numbers passed 
+     * in.
+     * @param {number[]} numbers An array of numbers to accumulate.
+     * @returns {number[]} An array of accumulated values.
+     */
+    static _accumulate(numbers) {
+        let accum = [];
+        let total = 0;
+        for (let n of numbers) {
+            total += n;
+            accum.push(total);
+        }
+        return accum;
     }
-    return accum;
-}
 
-/**
- * Randomly chooses one element from the population using the list of weights.
- * 
- * @param {Object[]} pop An array of objects to choose from.
- * @param {number[]} wts An array containing the weight of each object.
- */
-function wchoose(pop, wts) {
-    let acm = accumulate(wts);
-    let rnd = Math.random() * acm[acm.length - 1];
-    let idx = acm.findIndex((elm) => rnd <= elm);
-    return pop[idx];
+    /**
+     * Randomly chooses one element from the population using the list of 
+     * weights.
+     * @param {Object[]} pop An array of objects (population) to choose from.
+     * @param {number[]} wts An array containing each weight for each object.
+     */
+    static _wchoose(pop, wts) {
+        let acm = this._accumulate(wts);
+        let rnd = Math.random() * acm[acm.length - 1];
+        let idx = acm.findIndex((elm) => rnd <= elm);
+        return pop[idx];
+    }
 }
 
 customElements.define("flash-card-deck", FlashCardDeck);
