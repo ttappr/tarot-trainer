@@ -1,84 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/border-layout.css">
-    <script type="text/javascript" src="./js/card-data.js"></script>
-    <script type="text/javascript" src="./js/flash-card.js"></script>
-    <script type="text/javascript" src="./js/round-gauge.js"></script>
 
-    <style>
-      @font-face {
-        font-family: IMFellGreatPrimer;
-        src: url(./font/IMFellGreatPrimerSC-Regular.ttf);
-      }
-      @font-face {
-        font-family: HandTIMES;
-        src: url(./font/HandTIMES.ttf);
-      }
-      @font-face {
-        font-family: Freeride;
-        src: url(./font/Freeride.otf);
-      }
-      @font-face {
-        font-family: Jancient;
-        src: url(./font/JANCIENT.TTF);
-      }
-      * {
-        font-family: Jancient;
-      }
-    </style>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/app-layout.css">
 
-  </head>
+  <script type="text/javascript" src="./js/card-data.js"></script>
+  <script type="text/javascript" src="./js/flash-card.js"></script>
+  <script type="text/javascript" src="./js/round-gauge.js"></script>
+
+  <style>
+    @font-face {
+      font-family: IMFellGreatPrimer;
+      src: url(./font/IMFellGreatPrimerSC-Regular.ttf);
+    }
+
+    @font-face {
+      font-family: HandTIMES;
+      src: url(./font/HandTIMES.ttf);
+    }
+
+    @font-face {
+      font-family: Freeride;
+      src: url(./font/Freeride.otf);
+    }
+
+    @font-face {
+      font-family: Jancient;
+      src: url(./font/JANCIENT.TTF);
+    }
+
+    * {
+      font-family: Jancient;
+    }
+  </style>
+</head>
+
 <body>
+  <!--  Top Bar  -->
 
-<div class="header">
-  <h1>Chania</h1>
-</div>
-<!--
-<style>
-  div.row {
-    background: linear-gradient(rgba(255,255,255,.5), 
-                                rgba(255,255,255,.5)), 
-                                url(./img/parchment.jpg);
-    background-size: cover;
-  }
-</style>
--->
-<div class="row">
-  <div class="col-3 col-s-3 menu">
-    <round-gauge value="0.25"></round-gauge>
-    <ul>
-      <li>The Flight</li>
-      <li>The City</li>
-      <li>The Island</li>
-      <li>The Food</li>
-    </ul>
+  <div class="topbar">
+    top bar
   </div>
 
-  <div class="col-9 col-s-9">
-    <h1>Tarot Trainer</h1>
-    <flash-card-deck id="deck" />
-  </div>
-<!--
-  <div class="col-3 col-s-12">
+  <!--  Content Panel  -->
+
+  <div class="content">
+
     <div class="aside">
-      <h2>What?</h2>
-      <p>Chania is a city on the island of Crete.</p>
-      <h2>Where?</h2>
-      <p>Crete is a Greek island in the Mediterranean Sea.</p>
-      <h2>How?</h2>
-      <p>You can reach Chania airport from all over Europe.</p>
+      <round-gauge value="0.25"></round-gauge>
     </div>
+
+    <div class="deck-panel">
+      <h1>Tarot Trainer</h1>
+      <flash-card-deck id="deck" />
+    </div>
+
   </div>
--->
-</div>
+  
+  <!--  Status Bar  -->
 
-<div class="footer">
-    <p>
-      Resize the browser window to see how the content respond to the resizing.
-    </p>
-</div>
-
+  <div class="statusbar">
+    status bar
+  </div>
 </body>
+
 </html>
