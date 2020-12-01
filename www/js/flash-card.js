@@ -4,10 +4,8 @@
 /**
  * If the platform doesn't support WeakRef, provide a dummy stub for it.
  */
-try { 
-    new WeakRef({});
-} catch (ReferenceError) {
-    console.info("WeakRef is undefined for this platform. " +
+try { WeakRef } catch (ReferenceError) {
+    console.warn("WeakRef is undefined for this platform. " +
                  "Using stub version instead.");
     WeakRef = class {
         constructor(obj) {
@@ -135,7 +133,6 @@ class FlashCardDeck extends HTMLElement {
         for (let obj of CARD_DATA) {
             this._cards.push(new FlashCard(...Object.values(obj)));
         }
-        console.info(this._cards);
         this.pickRandom();
     }
     /**

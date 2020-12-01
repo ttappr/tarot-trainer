@@ -162,6 +162,12 @@ function bisect_left(arr, target) {
     return l;
 }
 
+/*
+Serial code for win2k sp4:
+
+    SP4: DDTPV-TXMX7-BBGJ9-WGY8K-B9GHM
+*/
+
 function zip(...iterables) {
     return [...iterables[0]].map((_, c)    => iterables
                             .map(iterables => iterables[c]));

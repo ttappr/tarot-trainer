@@ -138,8 +138,6 @@ class RoundGauge extends HTMLElement {
         switch (name) {
             case "value" : this.value = newValue; break;
         }
-        console.info(
-            `RoundGauge.attributeChanged(${name}, ${oldValue}, ${newValue})`);
     }
 }
 
