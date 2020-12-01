@@ -8,30 +8,22 @@ class HTMLInclude extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: "open"});
-        this._populated = false;
+        setTimeout(() => this._load());
     }
-    connectedCallback() {
-        //setTimeout(() => this._fetch());
-        this._fetch();
-    }
-    async _fetch() {
-        try {
-            if (this.isConnected && !this._populated) {
-                this._populated = true;
-                let src = this.textContent;
-                let rsp = await fetch(src);
-                let txt = await rsp.text();
-                this.shadowRoot.innerHTML = txt;
-            }
-        } catch (error) {
-            console.error(`HTMLInclude._fetch() caught an error: ${error}`);
-            this._populated = false;
-            throw error;
+    async _load() {
+        let src = this.textContent.trim();
+
+        if (!src) {
+            throw new Error("URL missing between <html-import> tags.")
+        } 
+
+        let rsp = await fetch(src);
+
+        if (rsp.status != 200) {
+            throw new Error(`Failed to load file (${src}) for <html-import>.`);
         }
+
+        this.shadowRoot.innerHTML = await rsp.text();
     }
 }
 customElements.define("html-include", HTMLInclude);
-
-async function foo() {
-    console.warn(`foo() called`);
-}
