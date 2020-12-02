@@ -5,16 +5,19 @@
  * this element: <html-include>./partials/my-partial-page.html</html-include>.
  */
 class HTMLInclude extends HTMLElement {
-    constructor() {
+    constructor(src) {
         super();
         this.attachShadow({mode: "open"});
+        if (src) { 
+            this.textContent = src;
+        }
         setTimeout(() => this._load());
     }
     async _load() {
         let src = this.textContent.trim();
 
         if (!src) {
-            throw new Error("URL missing between <html-import> tags.")
+            throw new Error("URL missing between <html-import> tags.");
         } 
 
         let rsp = await fetch(src);

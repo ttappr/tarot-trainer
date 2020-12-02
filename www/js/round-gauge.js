@@ -1,103 +1,47 @@
 
-/**
- * Source in ROUND_GAUGE_HTML adapted from 
- *      https://css-tricks.com/html5-meter-element/
- */
-const ROUND_GAUGE_HTML = `
-    <style>
-        /* Custom properties supported by the round-meter element.
-         * The values in :host hold the default values.
-         */
-        :host {
-            --background-color  : white;
-            --font-family       : Jancient; /* "Roboto", sans-serif; */
-            --font-size         : 32px;
-            --text-color        : #004033;
-            --gauge-fill        : #009578;
-            --gauge-bg-color    : #b4c0be;
-        }
-        /* Top host for gauge elements. */
-        .gauge {
-            width: 100%;
-            max-width: 250px;
-            font-family: var(--font-family);
-            font-size: var(--font-size);
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
-        /* The background color area in the gauge curve. */
-        .gauge__body {
-            width: 100%;
-            height: 0;
-            padding-bottom: 50%;
-            background: var(--gauge-bg-color);
-            position: relative;
-            border-top-left-radius: 100% 200%;
-            border-top-right-radius: 100% 200%;
-            overflow: hidden;
-        }
-        /* The rotating element. */
-        .gauge__fill {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: inherit;
-            height: 100%;
-            background: var(--gauge-fill);
-            transform-origin: center top;
-            transform: rotate(0.25turn);
-            transition: transform 1s linear; /* ease-out; */
-        }
-        /* The center circle with the value shown. */
-        .gauge__cover {
-            width: 75%;
-            height: 150%;
-            background: var(--background-color);
-            border-radius: 50%;
-            position: absolute;
-            top: 25%;
-            left: 50%;
-            transform: translateX(-50%);
-        
-            /* Text */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-bottom: 25%;
-            box-sizing: border-box;
-        }  
-    </style>
-    <div class="gauge">
-        <div class="gauge__body">
-            <div class="gauge__fill"></div>
-            <div class="gauge__cover"></div>
-        </div>
-    </div>
-`;
-
 class RoundGauge extends HTMLElement {
-    constructor() {
+    constructor(value) {
         super();
         this.attachShadow({mode: 'open'});
-        this.shadowRoot.innerHTML = ROUND_GAUGE_HTML;
+
+        this._value = value || 0;
+        this._ready = false;
+
+        this._load();
+    }
+    async _load() {
+        // ctrl+click file:///./../html-partials/round-gauge.html
+        let rsp = await fetch("./html-partials/round-gauge.html");
+
+        if (rsp.status != 200) {
+            throw new Error(`RoundGauge failed to fetch HTML content ` +
+                            `for "${src}"; response status ${rsp.status}.`);
+        }
+        this.shadowRoot.innerHTML = await rsp.text();
+
         this._gauge = this.shadowRoot.querySelector(".gauge");
         this._fill  = this.shadowRoot.querySelector(".gauge__fill");
         this._cover = this.shadowRoot.querySelector(".gauge__cover");
-        this.value = 0;
+        
+        this._ready = true;
+        this.value  = this._value;
     }
     /**
      * Setter for value of the meter.
      * @param {number} value A value between 0 and 1 inclusive.
      */
     set value(value) {
-        if (value < 0 || value > 1) {
+        if (0 <= value <= 1) {
+            this._value = value;
+            if (this._ready) {
+                this._fill.style.transform = `rotate(${value / 2}turn)`;
+                this._cover.textContent    = `${Math.round(value * 100)}%`;
+            }
+        } else {
             throw new RangeError(
                 `RoundMeter.value received an invalid value (${value}). ` +
                 "Value must be between 0 and 1 (both inclusive).");
         }
-        this._fill.style.transform  = `rotate(${value / 2}turn)`;
-        this._cover.textContent     = `${Math.round(value * 100)}%`;
-        this._value                 = 0;
     }
     /**
      * Getter for the value displayed in the meter.
