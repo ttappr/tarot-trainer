@@ -14,7 +14,7 @@ class RoundGauge extends HTMLElement {
         let rsp = await fetch("./html-partials/round-gauge.html");
 
         if (rsp.status != 200) {
-            throw new Error(`RoundGauge failed to fetch HTML content ` +
+            throw new Error(`${typeof this} failed to fetch HTML content ` +
                             `for "${src}"; response status ${rsp.status}.`);
         }
         this.shadowRoot.innerHTML = await rsp.text();
@@ -58,19 +58,6 @@ class RoundGauge extends HTMLElement {
         return ["value"];
     }
     /**
-     * Called every time the element is inserted into the DOM. 
-     */
-    connectedCallback() {
-        // Useful for  running setup code, such as fetching resources or 
-        // rendering. Generally,  you should try to delay work until this time.
-    }
-    /**
-     * Called when element has been moved into a new document.
-     */
-    adoptedCallback() {
-
-    }
-    /**
      * Called when an observed attribute has been added, removed, updated, or 
      * replaced. 
      * @param {string} name The name of the attribute.
@@ -82,6 +69,19 @@ class RoundGauge extends HTMLElement {
         switch (name) {
             case "value" : this.value = newValue; break;
         }
+    }
+    /**
+     * Called every time the element is inserted into the DOM. 
+     */
+    connectedCallback() {
+        // Useful for  running setup code, such as fetching resources or 
+        // rendering. Generally,  you should try to delay work until this time.
+    }
+    /**
+     * Called when element has been moved into a new document.
+     */
+    adoptedCallback() {
+
     }
 }
 

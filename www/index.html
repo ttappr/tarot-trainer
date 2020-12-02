@@ -10,6 +10,7 @@
   <script type="text/javascript" src="./js/flash-card.js"></script>
   <script type="text/javascript" src="./js/round-gauge.js"></script>
   <script type="text/javascript" src="./js/html-include.js"></script>
+  <script type="text/javascript" src="./js/confidence-rater.js"></script>
 
   <style>
     @font-face {
@@ -50,15 +51,16 @@
   <div class="content">
 
     <div class="aside">
-      <round-gauge value="0.28">
+      <round-gauge value="0.28"></round-gauge>
+
+      <confidence-rater orient="vertical" style="height: 300px">
+      </confidence-rater>
+
     </div>
 
     <div class="deck-panel">
       <h1>Tarot Trainer</h1>
-
-      <html-include> foo.html </html-include>
-
-      <flash-card-deck>
+      <flash-card-deck></flash-card-deck>
     </div>
 
   </div>
