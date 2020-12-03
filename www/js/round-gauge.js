@@ -11,13 +11,8 @@ class RoundGauge extends HTMLElement {
     }
     async _load() {
         // ctrl+click file:///./../html-partials/round-gauge.html
-        let rsp = await fetch("./html-partials/round-gauge.html");
-
-        if (rsp.status != 200) {
-            throw new Error(`${typeof this} failed to fetch HTML content ` +
-                            `for "${src}"; response status ${rsp.status}.`);
-        }
-        this.shadowRoot.innerHTML = await rsp.text();
+        let html = await loadText("./html-partials/round-gauge.html");
+        this.shadowRoot.innerHTML = html;
 
         this._gauge = this.shadowRoot.querySelector(".gauge");
         this._fill  = this.shadowRoot.querySelector(".gauge__fill");
@@ -88,8 +83,3 @@ class RoundGauge extends HTMLElement {
 // Register the custom element.
 customElements.define("round-gauge", RoundGauge);
 
-/**
- * Notes: 
- *  - To do conditional CSS rules, do something like:
- *    .elm[--prop="somevalue"] { ... }
- */

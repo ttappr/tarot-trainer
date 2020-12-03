@@ -8,8 +8,8 @@ Source in _ROUND_GAUGE_HTML adapted from
 
 <style>
     /* Custom properties supported by the round-meter element.
-        * The values in :host hold the default values.
-        */
+     * The values in :host hold the default values.
+     */
     :host {
         --background-color  : white;
         --font-family       : Jancient; /* "Roboto", sans-serif; */
@@ -17,6 +17,7 @@ Source in _ROUND_GAUGE_HTML adapted from
         --text-color        : #004033;
         --gauge-fill        : #009578;
         --gauge-bg-color    : #b4c0be;
+        --opacity           : 1;
     }
     /* Top host for gauge elements. */
     .gauge {
@@ -27,6 +28,7 @@ Source in _ROUND_GAUGE_HTML adapted from
         background-color: var(--background-color);
         color: var(--text-color);
         margin: auto;
+        opacity: var(--opacity);
     }
     /* The background color area in the gauge curve. */
     .gauge__body {

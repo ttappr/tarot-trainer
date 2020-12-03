@@ -2,22 +2,6 @@
 //import {CARD_DATA} from "./card-data.js";
 
 /**
- * If the platform doesn't support WeakRef, provide a dummy stub for it.
- */
-try { WeakRef } catch (ReferenceError) {
-    console.warn("WeakRef is undefined for this platform. " +
-                 "Using stub version instead.");
-    WeakRef = class {
-        constructor(obj) {
-            this._obj = obj;
-        }
-        deref() {
-            return this._obj;
-        }
-    }
-}
-
-/**
  * Represents a flashcard with face and back sides.
  */
 class FlashCard {
@@ -41,12 +25,29 @@ class FlashCard {
                 _reverse : reverse
             });
 
-        this._image     = {deref: () => null};
+        this._image     = null;
         this._inverted  = false;
         this._meaning   = document.createElement("p");
         this._reverse   = document.createElement("p");
         this._meaning.innerHTML = meaning;
         this._reverse.innerHTML = reverse;
+    }
+    get name() {
+        return `${this._value} of ${this._suit}` + 
+               `${(this._inverted) ? " (reversed)":""}`;
+    }
+    set reversed(b) {
+        this._inverted = b;
+        if (this._image) {
+            if (this._inverted) {
+                this._image.style["transform"] = "rotate(180deg)";
+            } else {
+                this._image.style["transform"] = "";
+            }
+        }
+    }
+    get reversed() {
+        return this._inverted;
     }
     /**
      * Property giving the element that holds the content for the face card.
@@ -54,17 +55,16 @@ class FlashCard {
      * @returns {HTMLElement} The card's face content.
      */
     get face() {
-        let image = this._image.deref();
-        if (!image) {
-            image = new Image();
+        if (!this._image) {
+            let image = new Image();
             image.src = "img/" + this._pic;
             image.style["max-width"] = "100%";
             image.style["max-height"] = "100%";
-            this._image = new WeakRef(image);
+            image.style["outline"] = "2px solid black";
+            this._image = image;
+            this.reversed = this.reversed;
         }
-        let inv = this._inverted;
-        image.style["transform"] = (inv) ? "rotate(180deg)" : "";
-        return image;
+        return this._image;
     }
     /**
      * Property giving the element that holds the content for the back side.
@@ -73,12 +73,6 @@ class FlashCard {
      */
     get back() {
         return (this._inverted) ? this._reverse : this._meaning;
-    }
-    /**
-     * Turns the card upside down. The face and back are updated.
-     */
-    invert() {
-        this._inverted = !this._inverted;
     }
 }
 
@@ -99,27 +93,19 @@ class FlashCardDeck extends HTMLElement {
     }
     async _load() {
         // ctrl+click file:///./../html-partials/flash-card.html
-        let html = await this._loadText("./html-partials/flash-card.html");
+        let html = await loadText("./html-partials/flash-card.html");
         this.shadowRoot.innerHTML = html;
 
-        this._face = this.shadowRoot.getElementById("face");
-        this._back = this.shadowRoot.getElementById("back");
+        this._face  = this.shadowRoot.getElementById("face");
+        this._back  = this.shadowRoot.getElementById("back");
+        this._title = this.shadowRoot.getElementById("title");
 
-        let data = JSON.parse(await this._loadText("./js/card-data.json"));
+        let data = JSON.parse(await loadText("./data/card-data.json"));
 
         for (let obj of data) {
             this._cards.push(new FlashCard(...Object.values(obj)));
         }
         this.pickRandom();
-    }
-    async _loadText(src) {
-        let rsp = await fetch(src);
-
-        if (rsp.status != 200) {
-            throw new Error(`${typeof this} failed to fetch text content ` +
-                            `from "${src}"; response status ${rsp.status}.`);
-        }
-        return await rsp.text();
     }
     /**
      * Returns the number of cards in the deck.
@@ -127,9 +113,12 @@ class FlashCardDeck extends HTMLElement {
     get numCards() {
         return this._cards.length;
     }
+    get currentCard() {
+        return this._current;
+    }
     /**
      * Chooses a card at random and displays it.
-     * @param {number[]} weights An optional array of weights for each card.
+     * @param {number[]} [weights] An optional array of weights for each card.
      */
     pickRandom(weights) {
         if (weights) {
@@ -138,19 +127,23 @@ class FlashCardDeck extends HTMLElement {
             let idx = Math.floor(Math.random() * this._cards.length);
             var card = this._cards[idx];
         }
-        let rev = Math.random() < 0.50;
-        if (rev) { card.invert(); }
-
-        let [face, back] = [card.face, card.back];
+        if (card === this._current) {
+            card.reversed = !card.reversed;
+        } else {
+            card.reversed = (Math.random() < 0.50);
+        }
+        this._title.innerHTML = card.name;
 
         if (this._current) {
-            this._face.replaceChild(face, this._current.face);
-            this._back.replaceChild(back, this._current.back);
+            let curFace = this._face.firstChild;
+            let curBack = this._back.firstChild;
+            this._face.replaceChild(card.face, curFace);
+            this._back.replaceChild(card.back, curBack);
         } else {
-            this._face.appendChild(face);
-            this._back.appendChild(back);
+            this._face.appendChild(card.face);
+            this._back.appendChild(card.back);
         }
-        this._current = {face: face, back: back};
+        this._current = card;
     }
 
     /**
@@ -171,14 +164,14 @@ class FlashCardDeck extends HTMLElement {
 
     /**
      * Randomly chooses one element from the population using the list of 
-     * weights.
+     * weights to determine the probability each item will be selected.
      * @param {Object[]} pop An array of objects (population) to choose from.
      * @param {number[]} wts An array containing each weight for each object.
      */
     static _wchoose(pop, wts) {
         let acm = this._accumulate(wts);
         let rnd = Math.random() * acm[acm.length - 1];
-        let idx = acm.findIndex((elm) => rnd <= elm);
+        let idx = acm.findIndex((elm) => !(rnd < elm));
         return pop[idx];
     }
 }

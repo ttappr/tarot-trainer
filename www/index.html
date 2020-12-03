@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="./css/app-layout.css">
 
   <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="./js/utils.js"></script>
   <script type="text/javascript" src="./js/flash-card.js"></script>
   <script type="text/javascript" src="./js/round-gauge.js"></script>
   <script type="text/javascript" src="./js/html-include.js"></script>
@@ -51,7 +52,7 @@
   <div class="content">
 
     <div class="aside">
-      <round-gauge value="0.28"></round-gauge>
+      <round-gauge value="0.28" style="--opacity: 0.7"></round-gauge>
 
       <confidence-rater orient="vertical" style="height: 300px">
       </confidence-rater>
@@ -63,7 +64,6 @@
     </div>
 
     <div class="deck-panel">
-      <h1>Tarot Trainer</h1>
       <flash-card-deck></flash-card-deck>
     </div>
 
