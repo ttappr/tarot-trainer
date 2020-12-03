@@ -19,13 +19,11 @@ class HTMLInclude extends HTMLElement {
         if (!src) {
             throw new Error("URL missing between <html-import> tags.");
         } 
-
         let rsp = await fetch(src);
 
         if (rsp.status != 200) {
             throw new Error(`Failed to load file (${src}) for <html-import>.`);
         }
-
         this.shadowRoot.innerHTML = await rsp.text();
     }
 }

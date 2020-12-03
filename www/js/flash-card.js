@@ -95,45 +95,31 @@ class FlashCardDeck extends HTMLElement {
         this.attachShadow({mode: 'open'});
         this._cards = [];
         this._current = null;
+        this._load();
+    }
+    async _load() {
+        // ctrl+click file:///./../html-partials/flash-card.html
+        let html = await this._loadText("./html-partials/flash-card.html");
+        this.shadowRoot.innerHTML = html;
 
-        this.shadowRoot.innerHTML = `
-            <style>
-                #container {
-                    float: left;
-                    max-height: 100%;
-                    width: 100%;
-                }
-                #face {
-                    width: 45%;
-                    margin-right: 2%;
-                    margin-left: 5%;
-                    max-height: 100%;
-                    float: left;
-                }
-                #back {
-                    width: 45%;
-                    float: left;
-                    //font: 1.7em Freeride, bold;
-                    font: 1.7em Jancient;
-                    //font: 1.2em "Fira Sans", sans-serif;
-                }
-                #clearfix {
-                    clear: both;
-                }
-            </style>
-            <div id="container">
-                <div id="face"></div>
-                <div id="back"></div>
-                <div id="clearfix"></div>
-            </div>
-        `;
         this._face = this.shadowRoot.getElementById("face");
         this._back = this.shadowRoot.getElementById("back");
 
-        for (let obj of CARD_DATA) {
+        let data = JSON.parse(await this._loadText("./js/card-data.json"));
+
+        for (let obj of data) {
             this._cards.push(new FlashCard(...Object.values(obj)));
         }
         this.pickRandom();
+    }
+    async _loadText(src) {
+        let rsp = await fetch(src);
+
+        if (rsp.status != 200) {
+            throw new Error(`${typeof this} failed to fetch text content ` +
+                            `from "${src}"; response status ${rsp.status}.`);
+        }
+        return await rsp.text();
     }
     /**
      * Returns the number of cards in the deck.

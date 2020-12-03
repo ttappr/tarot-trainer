@@ -28,7 +28,7 @@ class ConfidenceRater extends HTMLElement {
                 (entries) => {
                     let ent = entries[0];
                     let h   = ent.contentRect.height;
-                    slider.style.width = `${h}px`;
+                    slider.style.width = `${h - 20}px`;
                 }
             );
             obs.observe(container);

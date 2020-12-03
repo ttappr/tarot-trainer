@@ -2,11 +2,11 @@
 <html>
 
 <head>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./css/app-layout.css">
 
   <script type="text/javascript" src="cordova.js"></script>
-  <script type="text/javascript" src="./js/card-data.js"></script>
   <script type="text/javascript" src="./js/flash-card.js"></script>
   <script type="text/javascript" src="./js/round-gauge.js"></script>
   <script type="text/javascript" src="./js/html-include.js"></script>
@@ -55,7 +55,11 @@
 
       <confidence-rater orient="vertical" style="height: 300px">
       </confidence-rater>
-
+        <!-- TODO - Find out if I need to pass styling on to the shadow, or
+                    if it adheres to this element's dimensions. Maybe the
+                    shadow has defaults that cause the contained elements to
+                    run over.
+                  -->
     </div>
 
     <div class="deck-panel">
