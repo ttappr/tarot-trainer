@@ -8,7 +8,7 @@ class ConfidenceRater extends HTMLElement {
         this._load();
     }
     async _load() {
-        // ctrl+click file:///./../html-partials/confidence-rater.html
+        // Related file: file:///./../html-partials/confidence-rater.html
         let html = await loadText("./html-partials/confidence-rater.html");
         this.shadowRoot.innerHTML = html;
 
@@ -28,7 +28,7 @@ class ConfidenceRater extends HTMLElement {
                 (entries) => {
                     let ent = entries[0];
                     let h   = ent.contentRect.height;
-                    slider.style.width = `${h - 20}px`;
+                    slider.style.width = `${h}px`;
                 }
             );
             obs.observe(container);

@@ -92,7 +92,7 @@ class FlashCardDeck extends HTMLElement {
         this._load();
     }
     async _load() {
-        // ctrl+click file:///./../html-partials/flash-card.html
+        // Related file: file:///./../html-partials/flash-card.html
         let html = await loadText("./html-partials/flash-card.html");
         this.shadowRoot.innerHTML = html;
 

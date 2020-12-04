@@ -1,12 +1,16 @@
 
-<!-- Part of: file:///./../js/confidence-rater.js -->
+<!-- Related file: file:///./../js/confidence-rater.js -->
 <style>
     * {
        box-sizing: border-box;
+       margin: 0;
+    }
+    :host {
+        --height: 100%;
     }
     .slidecontainer {
         width: 100%;
-        height: 80%; /* TODO - Why did I need to do this? */
+        height: var(--height);
         overflow: hidden;
     }
 
@@ -19,6 +23,7 @@
         opacity: 0.7;
         -webkit-transition: .2s;
         transition: opacity .2s;
+        /* padding: 3px */;
     }
 
     .slider[orient=vertical] {

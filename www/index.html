@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/app-layout.css">
 
   <script type="text/javascript" src="cordova.js"></script>
   <script type="text/javascript" src="./js/utils.js"></script>
@@ -13,31 +12,7 @@
   <script type="text/javascript" src="./js/html-include.js"></script>
   <script type="text/javascript" src="./js/confidence-rater.js"></script>
 
-  <style>
-    @font-face {
-      font-family: IMFellGreatPrimer;
-      src: url(./font/IMFellGreatPrimerSC-Regular.ttf);
-    }
-
-    @font-face {
-      font-family: HandTIMES;
-      src: url(./font/HandTIMES.ttf);
-    }
-
-    @font-face {
-      font-family: Freeride;
-      src: url(./font/Freeride.otf);
-    }
-
-    @font-face {
-      font-family: Jancient;
-      src: url(./font/JANCIENT.TTF);
-    }
-
-    * {
-      font-family: Jancient;
-    }
-  </style>
+  <link rel="stylesheet" href="./css/index.css">
 </head>
 
 <body>
@@ -54,7 +29,7 @@
     <div class="aside">
       <round-gauge value="0.28" style="--opacity: 0.7"></round-gauge>
 
-      <confidence-rater orient="vertical" style="height: 300px">
+      <confidence-rater orient="vertical" style="--height: 80%;">
       </confidence-rater>
         <!-- TODO - Find out if I need to pass styling on to the shadow, or
                     if it adheres to this element's dimensions. Maybe the

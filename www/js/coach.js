@@ -1,9 +1,14 @@
 class Coach {
-    constructor(deck, meter, rater) {
+    constructor(deck, meter, rater, next) {
         this._deck = deck;
+        this._meter = meter;
         rater.attachListener(
             {valueChanged: (source, value) => {
-                this._updateCardConfidenceScore(value);
+                this._updateCardConfidenceScore(source, value);
+            }});
+        next.attachListener(
+            {nextRequest: (source) => {
+                this._nextCard(source);
             }});
     }
     static get instance() {
@@ -12,8 +17,11 @@ class Coach {
         }
         return Coach._instance;
     }
-    _updateCardConfidenceScore(value) {
+    _updateCardConfidenceScore(source, value) {
 
+    }
+    _nextCard(source) {
+        
     }
     _retrieveDisciplesData() {
         this._userData = JSON.parse(window.localStorage.getItem("userData"));
