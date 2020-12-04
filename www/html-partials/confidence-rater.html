@@ -4,9 +4,11 @@
     * {
        box-sizing: border-box;
        margin: 0;
+       padding: 0;
     }
     :host {
         --height: 100%;
+        --slider-height: 33px;
     }
     .slidecontainer {
         width: 100%;
@@ -23,14 +25,16 @@
         opacity: 0.7;
         -webkit-transition: .2s;
         transition: opacity .2s;
-        /* padding: 3px */;
     }
 
     .slider[orient=vertical] {
         position: relative;
         transform-origin: center left;
-        /* width: 400px; */
-        transform: rotate(-90deg) translate(-100%);
+        transform: rotate(-90deg) 
+                   translate(calc(-100% + var(--slider-height) / 2));
+                   /* The center point of rotation was in the middle, so half
+                      its height has to be decremented by the downward 
+                      translation. */
         left: 50%;
     }
 
@@ -41,8 +45,8 @@
     .slider::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 33px;
-        height: 33px;
+        width: var(--slider-height);
+        height: var(--slider-height);
         background: #009578; /* #4CAF50; */
         cursor: pointer;
     }
