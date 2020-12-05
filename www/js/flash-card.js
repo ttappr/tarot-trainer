@@ -25,24 +25,35 @@ class FlashCard {
                 _reverse : reverse
             });
 
-        this._image     = null;
         this._inverted  = false;
+        this._image     = this.face;
         this._meaning   = document.createElement("p");
         this._reverse   = document.createElement("p");
         this._meaning.innerHTML = meaning;
         this._reverse.innerHTML = reverse;
     }
+    get title() {
+        return `${this.name} ${(this._inverted) ? " (reversed)":""}`;
+    }
     get name() {
-        return `${this._value} of ${this._suit}` + 
-               `${(this._inverted) ? " (reversed)":""}`;
+        if (!this._name) {
+            this._name = `${this._value} of ${this._suit}`;
+        }
+        return this._name;
+    }
+    get id() {
+        if (!this._id) {
+            this._id = this.name.replaceAll(' ', '_');
+        }
+        return this._id;
     }
     set reversed(b) {
         this._inverted = b;
         if (this._image) {
             if (this._inverted) {
-                this._image.style["transform"] = "rotate(180deg)";
+                this._image.style.transform = "rotate(180deg)";
             } else {
-                this._image.style["transform"] = "";
+                this._image.style.transform = "";
             }
         }
     }
@@ -87,7 +98,7 @@ class FlashCardDeck extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
-        this._cards = [];
+        this._cards = {};
         this._current = null;
         this._load();
     }
@@ -103,36 +114,56 @@ class FlashCardDeck extends HTMLElement {
         let data = JSON.parse(await loadText("./data/card-data.json"));
 
         for (let obj of data) {
-            this._cards.push(new FlashCard(...Object.values(obj)));
+            let card = new FlashCard(...Object.values(obj));
+
+            this._cards[card.id         ] = [card, false];
+            this._cards[card.id + '_rev'] = [card, true ];
         }
-        this.pickRandom();
+        let i = Math.floor(Math.random() * this.numCards);
+        let [c, r] = Object.values(this._cards)[i];
+        c.reversed = r;
+        this._setCard(c);
+        Coach.instance.deck = this;
+    }
+    get id() {
+        return "Rider_Waite_Smith_Tarot";
+    }
+    get title() {
+        return "Rider Waite Smith Tarot";
+    }
+    get cardIDs() {
+        return Object.keys(this._cards);
+
+    }
+    get curCardID() {
+        return `${this._current.id}${this._current.reversed ? "_rev" : ""}`;
+    }
+    setCardByID(id) {
+        let [card, rev] = this._cards[id];
+        card.reversed = rev;
+        this._setCard(card);
     }
     /**
      * Returns the number of cards in the deck.
      */
     get numCards() {
-        return this._cards.length;
+        return Object.keys(this._cards).length;
     }
     get currentCard() {
         return this._current;
     }
-    /**
-     * Chooses a card at random and displays it.
-     * @param {number[]} [weights] An optional array of weights for each card.
-     */
-    pickRandom(weights) {
-        if (weights) {
-            var card = this._wchoose(this._cards, weights);
-        } else {
-            let idx = Math.floor(Math.random() * this._cards.length);
-            var card = this._cards[idx];
-        }
-        if (card === this._current) {
-            card.reversed = !card.reversed;
-        } else {
-            card.reversed = (Math.random() < 0.50);
-        }
-        this._title.innerHTML = card.name;
+    revealAnswer() {
+        // TODO - This fade-in code might be cleaned up a bit.
+        let child = this._back.firstChild;
+        let back  = this._back;
+        back.removeChild(child);
+        child.classList.add("fade-in");
+        back.style.visibility = "visible";
+        back.appendChild(child);
+    }
+    _setCard(card) {
+        this._back.style.visibility = "hidden";
+        this._title.innerHTML = card.title;
 
         if (this._current) {
             let curFace = this._face.firstChild;
@@ -144,35 +175,6 @@ class FlashCardDeck extends HTMLElement {
             this._back.appendChild(card.back);
         }
         this._current = card;
-    }
-
-    /**
-     * Produces an array of cummulative values from the array of numbers passed 
-     * in.
-     * @param {number[]} numbers An array of numbers to accumulate.
-     * @returns {number[]} An array of accumulated values.
-     */
-    static _accumulate(numbers) {
-        let accum = [];
-        let total = 0;
-        for (let n of numbers) {
-            total += n;
-            accum.push(total);
-        }
-        return accum;
-    }
-
-    /**
-     * Randomly chooses one element from the population using the list of 
-     * weights to determine the probability each item will be selected.
-     * @param {Object[]} pop An array of objects (population) to choose from.
-     * @param {number[]} wts An array containing each weight for each object.
-     */
-    static _wchoose(pop, wts) {
-        let acm = this._accumulate(wts);
-        let rnd = Math.random() * acm[acm.length - 1];
-        let idx = acm.findIndex((elm) => !(rnd < elm));
-        return pop[idx];
     }
 }
 

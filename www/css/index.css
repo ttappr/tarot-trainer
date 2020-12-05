@@ -14,7 +14,7 @@
 .topbar {
     height: var(--bar-height);
     color: white;
-    background-color: purple;
+    background-color: #009578;
     text-align: center;
 }
 
@@ -36,7 +36,7 @@
     width: 100%;
     height: var(--bar-height);
     color: white;
-    background-color: purple;
+    background-color: #009578;
     text-align: center;
 }
 
@@ -78,22 +78,22 @@ flash-card-deck {
 
 @font-face {
     font-family: IMFellGreatPrimer;
-    src: url(/font/IMFellGreatPrimerSC-Regular.ttf);
+    src: url(./../font/IMFellGreatPrimerSC-Regular.ttf);
   }
 
 @font-face {
     font-family: HandTIMES;
-    src: url(/font/HandTIMES.ttf);
+    src: url(./../font/HandTIMES.ttf);
 }
 
 @font-face {
     font-family: Freeride;
-    src: url(/font/Freeride.otf);
+    src: url(./../font/Freeride.otf);
 }
 
 @font-face {
     font-family: Jancient;
-    src: url(/font/JANCIENT.TTF);
+    src: url(./../font/JANCIENT.TTF);
 }
 
 html * {

@@ -6,6 +6,7 @@ class ConfidenceRater extends HTMLElement {
         this._listeners = [];
         this._ready = false;
         this._load();
+        Coach.instance.confidenceInput = this;
     }
     async _load() {
         // Related file: file:///./../html-partials/confidence-rater.html
@@ -16,9 +17,10 @@ class ConfidenceRater extends HTMLElement {
         let slider    = this.shadowRoot.querySelector(".slidecontainer input");
         let orient    = this.attributes.orient;
         this._sizeObs = null;
+        this._slider  = slider;
 
         slider.onchange = (e) => {
-            this._notifyValueChanged(this, e.target.value);
+            Coach.updateConf(e.target.value);
         }
 
         if (orient && orient.value.toLowerCase() == "vertical") {
@@ -39,24 +41,11 @@ class ConfidenceRater extends HTMLElement {
     set value(n) {
         this._slider.value = n;
     }
+    get value() {
+        return this._slider.value;
+    }
     set disabled(b) {
         this._slider.disabled = b;
-    }
-    attachListener(listener) {
-        this._listeners.push(listener);
-    }
-    detachListener(listener) {
-        this._listeners.delete(listener);
-    }
-    _notifyValueChanged(value) {
-        for (let l of this._listeners) {
-            l.valueChanged(this, value);
-        }
-    }
-}
-
-class ConfidenceRaterListener {
-    valueChanged(source, value) {
     }
 }
 

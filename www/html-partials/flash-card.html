@@ -27,6 +27,7 @@
         float: left;
     }
     #back {
+        visibility: hidden;
         width: 45%;
         float: left;
         font-size: 1.5em;
@@ -37,10 +38,62 @@
     #clearfix {
         clear: both;
     }
+    .fade-in {
+        animation: fadeIn ease 0.5s;
+        -webkit-animation: fadeIn ease 0.5s;
+        -moz-animation: fadeIn ease 0.5s;
+        -o-animation: fadeIn ease 0.5s;
+        -ms-animation: fadeIn ease 0.5s;
+    }
+    @keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+
+    @-moz-keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+
+    @-webkit-keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+
+    @-o-keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+
+    @-ms-keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+
 </style>
 <div id="container">
     <p id="title"></p>
     <div id="face"></div>
-    <div id="back"></div>
+    <div id="back" class="fade-in"></div>
     <div id="clearfix"></div>
 </div>
