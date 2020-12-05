@@ -9,7 +9,6 @@
   <script type="text/javascript" src="./js/utils.js"></script>
   <script type="text/javascript" src="./js/flash-card.js"></script>
   <script type="text/javascript" src="./js/round-gauge.js"></script>
-  <script type="text/javascript" src="./js/html-include.js"></script>
   <script type="text/javascript" src="./js/confidence-rater.js"></script>
 
   <link rel="stylesheet" href="./css/index.css">
@@ -29,13 +28,18 @@
     <div class="aside">
       <round-gauge value="0.28" style="--opacity: 0.7"></round-gauge>
 
-      <confidence-rater orient="vertical" style="--height: 80%;">
+      <confidence-rater orient="vertical" style="--height:60%;">
       </confidence-rater>
-        <!-- TODO - Find out if I need to pass styling on to the shadow, or
-                    if it adheres to this element's dimensions. Maybe the
-                    shadow has defaults that cause the contained elements to
-                    run over.
-                  -->
+        <div style="padding:10px; text-align:center">
+          <button style="height:2em; width:50%; font-size:1.5em" 
+                  onclick="next()">Next</button>
+          <script>
+            function next() {
+              let deck = document.querySelector("flash-card-deck");
+              deck.pickRandom();
+            }
+          </script>
+        </div>
     </div>
 
     <div class="deck-panel">

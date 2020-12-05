@@ -2,6 +2,8 @@ class Coach {
     constructor(deck, meter, rater, next) {
         this._deck = deck;
         this._meter = meter;
+        this._rater = rater;
+        this._next = next;
         rater.attachListener(
             {valueChanged: (source, value) => {
                 this._updateCardConfidenceScore(source, value);
