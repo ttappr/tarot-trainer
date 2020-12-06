@@ -1,0 +1,99 @@
+<!-- Related file: file:///./../js/flash-card.js -->
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+    }
+    :host {
+        --title-height: 12%;
+    }
+    #container {
+        height: 100%;
+        width: 100%;
+    }
+    #title {
+        width: 100%;
+        padding-left: 5%;
+        padding-top: 2%;
+        /* padding-bottom: 2%; */
+        font-size: xx-large;
+        height: var(--title-height);
+    }
+    #face {
+        width: 45%;
+        padding-right: 2%;
+        padding-left: 5%;
+        height: calc(100% - var(--title-height));
+        float: left;
+    }
+    #back {
+        visibility: hidden;
+        width: 45%;
+        float: left;
+        font-size: 1.5em;
+        padding-left: 5px;
+        overflow-y: auto;
+        height: calc(100% - var(--title-height));
+    }
+    #clearfix {
+        clear: both;
+    }
+    .fade-in {
+        animation: fadeIn ease 0.5s;
+        -webkit-animation: fadeIn ease 0.5s;
+        -moz-animation: fadeIn ease 0.5s;
+        -o-animation: fadeIn ease 0.5s;
+        -ms-animation: fadeIn ease 0.5s;
+    }
+    @keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+
+    @-moz-keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+
+    @-webkit-keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+
+    @-o-keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+
+    @-ms-keyframes fadeIn {
+        0% {
+            opacity:0;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+
+</style>
+<div id="container">
+    <p id="title"></p>
+    <div id="face"></div>
+    <div id="back" class="fade-in"></div>
+    <div id="clearfix"></div>
+</div>

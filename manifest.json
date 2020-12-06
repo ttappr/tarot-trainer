@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "TarotTrainer",
+  "short_name": "TarotTrainer",
+  "version": "com.jeho.tarot",
+  "description": "Tarot card flashcard program.",
+  "author": "TMTappr",
+  "icons": [],
+  "start_url": "index.html"
+}
