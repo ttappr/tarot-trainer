@@ -25,7 +25,7 @@ class ConfidenceRater extends HTMLElement {
         this._slider  = slider;
 
         slider.onchange = (e) => {
-            Coach.updateConf(+e.target.value);
+            Coach.updateConfidence(+e.target.value);
         }
 
         if (orient && orient.value.toLowerCase() == "vertical") {
