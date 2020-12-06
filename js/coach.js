@@ -98,7 +98,7 @@ class Coach {
      * if the user knows it with certainty, 100 should be used.
      * @param {number} value The user's certainty value for the current card.
      */
-    static updateConf(value) {
+    static updateConfidence(value) {
         let coach = Coach.instance;
         let id = coach._card_id;
         coach._iwdict[id] = (100 - value) || 10;
