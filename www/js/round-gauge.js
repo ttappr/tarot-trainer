@@ -1,3 +1,4 @@
+'use strict';
 
 class RoundGauge extends HTMLElement {
     constructor(value) {
@@ -8,8 +9,6 @@ class RoundGauge extends HTMLElement {
         this._ready = false;
 
         this._load();
-
-        Coach.instance.progressMeter = this;
     }
     async _load() {
         // ctrl+click file:///./../html-partials/round-gauge.html
@@ -22,6 +21,7 @@ class RoundGauge extends HTMLElement {
         
         this._ready = true;
         this.value  = this._value;
+        Coach.instance.progressMeter = this;
     }
     /**
      * Setter for value of the meter.

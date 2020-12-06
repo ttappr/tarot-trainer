@@ -76,21 +76,35 @@ flash-card-deck {
     /* For desktop: */
 }
 
-@font-face {
-    font-family: IMFellGreatPrimer;
-    src: url(./../font/IMFellGreatPrimerSC-Regular.ttf);
-  }
+/******* [IMPORTANT] *******
 
+TODO - Verify that each font included here has a license that permits their
+       use roayalty free before enabling any.
+
+LICENSE: Free for personal use (commercial use requires permission from author).
 @font-face {
     font-family: HandTIMES;
     src: url(./../font/HandTIMES.ttf);
 }
 
+LICENSE: SIL OFL (Open Font License) Version 1.1. Permits use in commercial apps
+         as long as no "reserved names" are used in the application and other
+         terms of the OFL are met.
 @font-face {
     font-family: Freeride;
     src: url(./../font/Freeride.otf);
 }
+LICENSE: Open Font License v 1.1 (see above).
+@font-face {
+    font-family: IMFellGreatPrimer;
+    src: url(./../font/IMFellGreatPrimerSC-Regular.ttf);
+  }
 
+*/
+
+/* TODO - Requires written permission to use in commercial software. So remove 
+ * this font if this application ever goes commercial.
+ */
 @font-face {
     font-family: Jancient;
     src: url(./../font/JANCIENT.TTF);

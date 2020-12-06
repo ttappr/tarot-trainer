@@ -1,3 +1,4 @@
+'use strict';
 
 /**
  * Custom element <html-include> to operate like a C #include. The URL to the

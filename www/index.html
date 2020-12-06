@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script type="text/javascript" src="cordova.js"></script>
+  <!-- <script type="text/javascript" src="cordova.js"></script> -->
   <script type="text/javascript" src="./js/utils.js"></script>
   <script type="text/javascript" src="./js/flash-card.js"></script>
   <script type="text/javascript" src="./js/round-gauge.js"></script>
@@ -34,18 +34,27 @@
       <confidence-rater orient="vertical" style="--height:30%;">
       </confidence-rater>
 
-        <div style="padding:10px; text-align:center">
-          <button style="height:2em; width:50%; font-size:1.5em" 
-                  onclick="Coach.nextCard()">Next</button>
-        </div>
-        <div style="padding:10px; text-align:center">
-          <button style="height:2em; width:50%; font-size:1.5em"
-                  onclick="Coach.revealAnswer()">Reveal</button>
-        </div>
-        <div style="padding:10px; text-align:center">
-          <button style="height:2em; width:50%; font-size:1.5em"
-                  onclick="Coach.save()">Save</button>
-        </div>
+      <style>
+        .flow-button-host {
+          padding: 10px;
+          text-align: center;
+        }
+        .flow-button-host button {
+          height: 2em;
+          width: 50%;
+          font-size: 1.5em;
+        }
+      </style>
+
+      <div class="flow-button-host">
+        <button onclick="Coach.nextCard()">Next</button>
+      </div>
+      <div class="flow-button-host">
+        <button onclick="Coach.revealAnswer()">Reveal</button>
+      </div>
+      <div class="flow-button-host">
+        <button onclick="Coach.save()">Save</button>
+      </div>
     </div>
 
     <div class="deck-panel">

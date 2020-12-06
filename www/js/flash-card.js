@@ -1,5 +1,4 @@
-
-//import {CARD_DATA} from "./card-data.js";
+'use strict';
 
 /**
  * Represents a flashcard with face and back sides.
@@ -32,21 +31,38 @@ class FlashCard {
         this._meaning.innerHTML = meaning;
         this._reverse.innerHTML = reverse;
     }
+    /**
+     * The title of the card. The name of the card with '(reversed)' included if
+     * it's in reverse position.
+     * @returns {string} The title.
+     */
     get title() {
         return `${this.name} ${(this._inverted) ? " (reversed)":""}`;
     }
+    /**
+     * The name of the card.
+     * @returns {string} The name.
+     */
     get name() {
         if (!this._name) {
             this._name = `${this._value} of ${this._suit}`;
         }
         return this._name;
     }
+    /**
+     * A unique identifier for the card.
+     * @returns {Object} The card's ID.
+     */
     get id() {
         if (!this._id) {
-            this._id = this.name.replaceAll(' ', '_');
+            this._id = this.name.replace(/ /g, '_');
         }
         return this._id;
     }
+    /**
+     * Set to true, to position the card upside down. 
+     * @param {boolean} b true for reversed, false otherwise.
+     */
     set reversed(b) {
         this._inverted = b;
         if (this._image) {
@@ -57,6 +73,10 @@ class FlashCard {
             }
         }
     }
+    /**
+     * Indicates whether the card has been turned upside down.
+     * @returns {boolean} true for reversed, false otherwise.
+     */
     get reversed() {
         return this._inverted;
     }
@@ -125,33 +145,64 @@ class FlashCardDeck extends HTMLElement {
         this._setCard(c);
         Coach.instance.deck = this;
     }
+    /**
+     * A unique identifier for the deck.
+     * @returns {string} The ID.
+     */
     get id() {
         return "Rider_Waite_Smith_Tarot";
     }
+    /**
+     * The title of the deck.
+     * @returns {string} The title that can be displayed.
+     */
     get title() {
         return "Rider Waite Smith Tarot";
     }
+    /**
+     * A list of the ID's of the cards in the deck.
+     * @returns {Object[]} The identifiers of the cards in the deck.
+     */
     get cardIDs() {
         return Object.keys(this._cards);
 
     }
+    /**
+     * The ID of the currently displayed card.
+     * @returns {Object} The ID of the current card.
+     */
     get curCardID() {
         return `${this._current.id}${this._current.reversed ? "_rev" : ""}`;
     }
-    setCardByID(id) {
+
+    /**
+     * Sets the currently displayed card using its id.
+     * @param {Object} id The ID of the card make current.
+     */
+    set curCardID(id) {
         let [card, rev] = this._cards[id];
         card.reversed = rev;
         this._setCard(card);
     }
+
     /**
-     * Returns the number of cards in the deck.
+     * Returns the number of cards in the deck treating the card rightside up
+     * and upside down as two.
+     * @returns {number} The number of cards.
      */
     get numCards() {
         return Object.keys(this._cards).length;
     }
+    /**
+     * The currently displayed card.
+     * @returns {FlashCard} The currently active flash card.
+     */
     get currentCard() {
         return this._current;
     }
+    /**
+     * Causes the card's back with the answer to be displayed.
+     */
     revealAnswer() {
         // TODO - This fade-in code might be cleaned up a bit.
         let child = this._back.firstChild;
