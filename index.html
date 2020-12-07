@@ -12,7 +12,6 @@
   <script type="text/javascript" src="./js/confidence-rater.js"></script>
   <script type="text/javascript" src="./js/coach.js"></script>
 
-  <!-- <link rel="shortcut icon" href="https://ttappr.github.io/tarot-trainer/favicon.ico"> -->
   <link rel="shortcut icon" href="./IMG_3363.jpeg">
   <link rel="stylesheet" href="./css/index.css">
 
@@ -51,17 +50,11 @@
         <button onclick="Coach.nextCard(event)" id="next">
           Next
         </button>
-        <script>
-          Coach.instance.nextInput = document.querySelector("#next");
-        </script>
       </div>
       <div class="flow-button-host">
         <button onclick="Coach.revealAnswer(event)" id="reveal" class="tooltip">
           Reveal
         </button>
-        <script>
-          Coach.instance.revealInput = document.querySelector("#reveal");
-        </script>
       </div>
     </div>
 
@@ -70,6 +63,11 @@
     </div>
 
   </div>
+  <script>
+    let coach         = Coach.instance;
+    coach.nextInput   = document.querySelector("#next");
+    coach.revealInput = document.querySelector("#reveal");
+  </script>
 
   <!--  Status Bar  -->
 
