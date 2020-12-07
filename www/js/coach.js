@@ -27,6 +27,11 @@ class Coach {
             this._next   = null;
             this._iwdict = getPData("cardWeights") || {};
             this._icdict = getPData("cardConfidence") || {};
+            this._dirty  = false;
+            window.onbeforeunload = () => { 
+                console.info("Saving user data to local storage.");
+                setPData("cardConfidence",this._icdict);
+            }
         } else {
             throw Error("Use Coach.instance to get the Coach instance.");
         }
@@ -104,11 +109,16 @@ class Coach {
         coach._iwdict[id] = (100 - value) || 10;
         coach._icdict[id] = value;
         coach._updateProg();
+        if (this._next) {
+            this._next.disabled = false;
+        }
     }
     /**
      * Advances the app to the next randomly chosen flash card.
      */
-    static nextCard() {
+    static nextCard(event) {
+        this._next = event.target;
+        this._next.disabled = true;
         let coach = Coach.instance;
         let cid = wchoice(coach._ids, coach._wts);
         coach._card_id = cid;
@@ -119,14 +129,14 @@ class Coach {
      * Requests the Coach to display the answer for the current flash card.
      * The coach delegates this request to the FlashCardDeck object.
      */
-    static revealAnswer() {
+    static revealAnswer(event) {
         Coach.instance._deck.revealAnswer();
     }
     /**
      * Requests the coach to save the user's confidence scores for use in 
      * the following session.
      */
-    static save() {
+    static save(event) {
         Coach.instance._saveWeights();
     }
     _updateProg() {
