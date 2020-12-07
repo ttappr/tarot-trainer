@@ -54,8 +54,8 @@ class Coach {
                 this._icdict[id] = 0;
             }
         }
-        this._ids = Object.keys(this._iwdict);
-        this._wts = Object.values(this._iwdict);
+        //this._ids = Object.keys(this._iwdict);
+        //this._wts = Object.values(this._iwdict);
         this._card_id = d.curCardID;
         if (this._conf) {
             this._conf.value = this._icdict[this._card_id];
@@ -106,7 +106,7 @@ class Coach {
     static updateConfidence(value) {
         let coach = Coach.instance;
         let id = coach._card_id;
-        coach._iwdict[id] = (100 - value) || 10;
+        coach._iwdict[id] = (100 - value) * 10 || 1;
         coach._icdict[id] = +value;
         coach._updateProg();
 
@@ -126,8 +126,9 @@ class Coach {
         coach._reveal.disabled = false;
 
         coach._save();
-        
-        let cid = wchoice(coach._ids, coach._wts);
+        let ids = Object.keys(coach._iwdict);
+        let wts = Object.values(coach._iwdict);
+        let cid = wchoice(ids, wts);
         coach._card_id = cid;
         coach._deck.curCardID = cid;
         coach._conf.value = coach._icdict[cid];
