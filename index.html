@@ -15,6 +15,7 @@
   <!-- <link rel="shortcut icon" href="https://ttappr.github.io/tarot-trainer/favicon.ico"> -->
   <link rel="shortcut icon" href="./IMG_3363.jpeg">
   <link rel="stylesheet" href="./css/index.css">
+
 </head>
 
 <body>
@@ -31,11 +32,10 @@
   <div class="content">
 
     <div class="aside">
-      <round-gauge value="0.28" style="--opacity: 0.7"></round-gauge>
-
-      <confidence-rater orient="vertical" style="--height:30%;">
-      </confidence-rater>
-
+        <round-gauge value="0.28">
+        </round-gauge>
+        <confidence-rater orient="vertical" style="--height:30%">
+        </confidence-rater>
       <style>
         .flow-button-host {
           padding: 10px;
@@ -47,15 +47,18 @@
           font-size: 1.5em;
         }
       </style>
-
       <div class="flow-button-host">
-        <button onclick="Coach.nextCard(event)" id="next">Next</button>
+        <button onclick="Coach.nextCard(event)" id="next">
+          Next
+        </button>
         <script>
           Coach.instance.nextInput = document.querySelector("#next");
         </script>
       </div>
       <div class="flow-button-host">
-        <button onclick="Coach.revealAnswer(event)" id="reveal">Reveal</button>
+        <button onclick="Coach.revealAnswer(event)" id="reveal" class="tooltip">
+          Reveal
+        </button>
         <script>
           Coach.instance.revealInput = document.querySelector("#reveal");
         </script>

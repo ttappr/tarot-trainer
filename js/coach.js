@@ -26,15 +26,7 @@ class Coach {
             this._conf   = null;
             this._next   = null;
             this._reveal = null;
-            this._iwdict = getPData("cardWeights") || {};
-            this._icdict = getPData("cardConfidence") || {};
-            this._dirty  = false;
-
-            // When user closes the tab/page, save the weights.
-            window.onbeforeunload = () => { 
-                console.info("Saving user data to local storage.");
-                this._save();
-            }
+            this._restore();
         } else {
             throw Error("Use Coach.instance to get the Coach instance.");
         }
@@ -117,7 +109,7 @@ class Coach {
         coach._iwdict[id] = (100 - value) || 10;
         coach._icdict[id] = +value;
         coach._updateProg();
-        
+
         // Update button state.
         coach._next.disabled = false;
     }
@@ -132,6 +124,8 @@ class Coach {
         coach._next.disabled = true;
         coach._conf.disabled = true;
         coach._reveal.disabled = false;
+
+        coach._save();
         
         let cid = wchoice(coach._ids, coach._wts);
         coach._card_id = cid;
@@ -174,6 +168,10 @@ class Coach {
     _save() {
         setPData("cardWeights", this._iwdict);
         setPData("cardConfidence", this._icdict);
+    }
+    _restore() {
+        this._iwdict = getPData("cardWeights") || {};
+        this._icdict = getPData("cardConfidence") || {};
     }
 }
 
