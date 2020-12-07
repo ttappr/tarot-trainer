@@ -7,6 +7,7 @@
  * @type Coach
  */
 var _instance = null;
+var _DATA_VERSION  = "0.0.1";
 
 /**
  * The high level component that interacts with the various other components of
@@ -54,8 +55,6 @@ class Coach {
                 this._icdict[id] = 0;
             }
         }
-        //this._ids = Object.keys(this._iwdict);
-        //this._wts = Object.values(this._iwdict);
         this._card_id = d.curCardID;
         if (this._conf) {
             this._conf.value = this._icdict[this._card_id];
@@ -169,10 +168,18 @@ class Coach {
     _save() {
         setPData("cardWeights", this._iwdict);
         setPData("cardConfidence", this._icdict);
+        setPData("version", this._version);
     }
     _restore() {
-        this._iwdict = getPData("cardWeights") || {};
-        this._icdict = getPData("cardConfidence") || {};
+        this._version = getPData("version");
+        if (this._version != _DATA_VERSION) {
+            this._version = _DATA_VERSION;
+            this._iwdict  = {};
+            this._icdict  = {};
+        } else {
+            this._iwdict  = getPData("cardWeights") || {};
+            this._icdict  = getPData("cardConfidence") || {};
+        }
     }
 }
 
