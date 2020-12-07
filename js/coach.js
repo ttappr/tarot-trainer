@@ -127,7 +127,11 @@ class Coach {
         coach._save();
         let ids = Object.keys(coach._iwdict);
         let wts = Object.values(coach._iwdict);
-        let cid = wchoice(ids, wts);
+
+        let cid = coach._card_id;
+        for (let i = 0; i < 10 && cid == coach._card_id; i++) {
+            cid = wchoice(ids, wts);
+        }
         coach._card_id = cid;
         coach._deck.curCardID = cid;
         coach._conf.value = coach._icdict[cid];
