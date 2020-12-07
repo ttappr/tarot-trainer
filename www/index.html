@@ -12,36 +12,8 @@
   <script type="text/javascript" src="./js/confidence-rater.js"></script>
   <script type="text/javascript" src="./js/coach.js"></script>
 
-  <!-- <link rel="shortcut icon" href="https://ttappr.github.io/tarot-trainer/favicon.ico"> -->
   <link rel="shortcut icon" href="./IMG_3363.jpeg">
   <link rel="stylesheet" href="./css/index.css">
-
-  <style>
-    /*
-    .tooltip {
-      position: relative;
-      display: inline-block;
-      border-bottom: 1px dotted black;
-    }
-    */
-    .tooltip .tooltiptext {
-      visibility: hidden;
-      width: 120px;
-      background-color: black;
-      color: #fff;
-      text-align: center;
-      border-radius: 6px;
-      padding: 5px 0;
-    
-      /* Position the tooltip */
-      position: absolute;
-      z-index: 1;
-    }
-    
-    .tooltip:hover .tooltiptext {
-      visibility: visible;
-    }
-    </style>
 
 </head>
 
@@ -59,18 +31,10 @@
   <div class="content">
 
     <div class="aside">
-      <div class="tooltip">
-        <round-gauge value="0.28" style="--opacity: 0.7">
+        <round-gauge value="0.28">
         </round-gauge>
-        <span class="tooltiptext">
-          Your certainty in knowing all cards in the deck.
-        </span>
-      </div>
-      <div class="tooltip" style="height: 30%;">
-        <confidence-rater orient="vertical">
+        <confidence-rater orient="vertical" style="--height:30%">
         </confidence-rater>
-        <span class="tooltiptext">Rate your confidence in your answer.</span>
-      </div>
       <style>
         .flow-button-host {
           padding: 10px;
@@ -82,27 +46,15 @@
           font-size: 1.5em;
         }
       </style>
-
-      <div class="flow-button-host tooltip">
+      <div class="flow-button-host">
         <button onclick="Coach.nextCard(event)" id="next">
           Next
         </button>
-        <span class="tooltiptext">Click to draw the next card.</span>
-        <script>
-          Coach.instance.nextInput = document.querySelector("#next");
-        </script>
       </div>
-      <div class="flow-button-host tooltip">
+      <div class="flow-button-host">
         <button onclick="Coach.revealAnswer(event)" id="reveal" class="tooltip">
           Reveal
         </button>
-        <span class="tooltiptext">
-          Say what you remember of the meaning of the card, then
-          click this button to reveal it.
-        </span>
-        <script>
-          Coach.instance.revealInput = document.querySelector("#reveal");
-        </script>
       </div>
     </div>
 
@@ -111,6 +63,11 @@
     </div>
 
   </div>
+  <script>
+    let coach         = Coach.instance;
+    coach.nextInput   = document.querySelector("#next");
+    coach.revealInput = document.querySelector("#reveal");
+  </script>
 
   <!--  Status Bar  -->
 
