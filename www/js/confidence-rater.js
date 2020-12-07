@@ -11,7 +11,6 @@ class ConfidenceRater extends HTMLElement {
         this._listeners = [];
         this._ready = false;
         this._load();
-        Coach.instance.confidenceInput = this;
     }
     async _load() {
         // Related file: file:///./../html-partials/confidence-rater.html
@@ -42,6 +41,7 @@ class ConfidenceRater extends HTMLElement {
             this._sizeObs = obs;
         }
         this._ready = true;
+        Coach.instance.confidenceInput = this;
     }
     /**
      * Sets the user's confidence value for knowing the current card.

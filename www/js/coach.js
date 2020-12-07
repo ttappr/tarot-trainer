@@ -25,12 +25,15 @@ class Coach {
             this._meter  = null;
             this._conf   = null;
             this._next   = null;
+            this._reveal = null;
             this._iwdict = getPData("cardWeights") || {};
             this._icdict = getPData("cardConfidence") || {};
             this._dirty  = false;
+
+            // When user closes the tab/page, save the weights.
             window.onbeforeunload = () => { 
                 console.info("Saving user data to local storage.");
-                setPData("cardConfidence",this._icdict);
+                this._save();
             }
         } else {
             throw Error("Use Coach.instance to get the Coach instance.");
@@ -84,6 +87,7 @@ class Coach {
      */
     set confidenceInput(ci) {
         this._conf  = ci;
+        ci.disabled = true;
         if (this._deck) {
             ci.value = this._icdict[this._card_id];
         }
@@ -96,6 +100,10 @@ class Coach {
      */
     set nextInput(ni) {
         this._next  = ni;
+        ni.disabled = true;
+    }
+    set revealInput(ri) {
+        this._reveal = ri;
     }
     /**
      * Update the user's confidence value for the currently displayed card.
@@ -107,19 +115,24 @@ class Coach {
         let coach = Coach.instance;
         let id = coach._card_id;
         coach._iwdict[id] = (100 - value) || 10;
-        coach._icdict[id] = value;
+        coach._icdict[id] = +value;
         coach._updateProg();
-        if (this._next) {
-            this._next.disabled = false;
-        }
+        
+        // Update button state.
+        coach._next.disabled = false;
     }
     /**
      * Advances the app to the next randomly chosen flash card.
      */
     static nextCard(event) {
-        this._next = event.target;
-        this._next.disabled = true;
         let coach = Coach.instance;
+        coach._next = event.target;
+        
+        // Update button state.
+        coach._next.disabled = true;
+        coach._conf.disabled = true;
+        coach._reveal.disabled = false;
+        
         let cid = wchoice(coach._ids, coach._wts);
         coach._card_id = cid;
         coach._deck.curCardID = cid;
@@ -130,14 +143,20 @@ class Coach {
      * The coach delegates this request to the FlashCardDeck object.
      */
     static revealAnswer(event) {
-        Coach.instance._deck.revealAnswer();
+        let coach = Coach.instance;
+        coach._deck.revealAnswer();
+
+        // Update button state.
+        coach._conf.disabled = false;
+        coach._reveal.disabled = true;
+        coach._next.disabled = false;
     }
     /**
      * Requests the coach to save the user's confidence scores for use in 
      * the following session.
      */
     static save(event) {
-        Coach.instance._saveWeights();
+        Coach.instance._save();
     }
     _updateProg() {
         if (this._meter) {
@@ -152,7 +171,7 @@ class Coach {
             }
         }
     }
-    _saveWeights() {
+    _save() {
         setPData("cardWeights", this._iwdict);
         setPData("cardConfidence", this._icdict);
     }

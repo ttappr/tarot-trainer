@@ -49,13 +49,16 @@
       </style>
 
       <div class="flow-button-host">
-        <button onclick="Coach.nextCard(event)">Next</button>
+        <button onclick="Coach.nextCard(event)" id="next">Next</button>
+        <script>
+          Coach.instance.nextInput = document.querySelector("#next");
+        </script>
       </div>
       <div class="flow-button-host">
-        <button onclick="Coach.revealAnswer(event)">Reveal</button>
-      </div>
-      <div class="flow-button-host">
-        <button onclick="Coach.save(event)">Save</button>
+        <button onclick="Coach.revealAnswer(event)" id="reveal">Reveal</button>
+        <script>
+          Coach.instance.revealInput = document.querySelector("#reveal");
+        </script>
       </div>
     </div>
 
@@ -69,5 +72,4 @@
 
   <div class="statusbar"></div>
 </body>
-
 </html>
