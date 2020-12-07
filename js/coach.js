@@ -128,9 +128,10 @@ class Coach {
         let ids = Object.keys(coach._iwdict);
         let wts = Object.values(coach._iwdict);
 
-        let cid = coach._card_id;
-        for (let i = 0; i < 10 && cid == coach._card_id; i++) {
-            cid = wchoice(ids, wts);
+        let cid = wchoice(ids, wts);
+
+        for (let i = 0; cid === coach._card_id && i < 10; i++) {
+            cid = ids[ Math.floor(Math.random() * wts.length) ];
         }
         coach._card_id = cid;
         coach._deck.curCardID = cid;
@@ -181,8 +182,40 @@ class Coach {
             this._iwdict  = {};
             this._icdict  = {};
         } else {
-            this._iwdict  = getPData("cardWeights") || {};
-            this._icdict  = getPData("cardConfidence") || {};
+            // TODO - find a simpler solution to data format validation.
+            let iwdict = getPData("cardWeights") || {};
+            let icdict = getPData("cardConfidence") || {};
+            this._iwdict  = iwdict;
+            this._icdict  = icdict;
+            if (!(icdict === iwdict === {})) {
+                let wkv = Object.keys(iwdict).map((k) => [k, iwdict[k]]);
+                let ckv = Object.keys(icdict).map((k) => [k, icdict[k]]);
+                let error = false;
+                if (wkv.length !== ckv.length) {
+                    error = true;
+                } else {
+                    for (let i in wkv) {
+                        if ((wkv[i][0] !== ckv[i][0]) ||
+                            (isNaN(Number(wkv[i][1])) || 
+                             isNaN(Number(ckv[i][1])))||
+                            wkv[i][1] == 0 || 
+                            wkv[i][0] === ""  || ckv[i][0] == "") {
+                            error = true;
+                            break;
+                        }
+                    }
+                }
+                if (error) {
+                    console.error(
+                        `Coach._restore() detected possible data ` + 
+                        `corruption of stored weights or their keys. ` + 
+                        `cardWeights=${iwdict}  ` + 
+                        `cardConfidence=${icdict}`);
+                    this._iwdict = {};
+                    this._icdict = {};
+                    window.alert("Stored data required a reset. Sorry 😞");
+                }
+            }
         }
     }
 }
