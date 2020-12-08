@@ -160,7 +160,7 @@ class Coach {
     _updateProg() {
         if (this._meter) {
             let accm = accumulate(Object.values(this._icdict));
-            if (accm.length != 0) {
+            if (accm.length !== 0) {
                 let total = accm[accm.length - 1];
                 let possible = 100 * accm.length;
 
@@ -177,7 +177,7 @@ class Coach {
     }
     _restore() {
         this._version = getPData("version");
-        if (this._version != _DATA_VERSION) {
+        if (this._version !== _DATA_VERSION) {
             this._version = _DATA_VERSION;
             this._iwdict  = {};
             this._icdict  = {};
@@ -198,7 +198,7 @@ class Coach {
                         if ((wkv[i][0] !== ckv[i][0]) ||
                             (isNaN(Number(wkv[i][1])) || 
                              isNaN(Number(ckv[i][1])))||
-                            wkv[i][1] == 0 || 
+                            wkv[i][1] === 0 || 
                             wkv[i][0] === ""  || ckv[i][0] === "") {
                             error = true;
                             break;

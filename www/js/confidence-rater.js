@@ -27,7 +27,7 @@ class ConfidenceRater extends HTMLElement {
             Coach.updateConfidence(+e.target.value);
         }
 
-        if (orient && orient.value.toLowerCase() == "vertical") {
+        if (orient && orient.value.toLowerCase() === "vertical") {
             slider.setAttribute("orient", "vertical");
 
             let obs = new ResizeObserver(
