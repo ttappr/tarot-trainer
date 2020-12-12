@@ -29,6 +29,9 @@
     .tutor:hover {
       visibility:visible;
     }
+    button {
+      user-select: none;
+    }
   </style>
   <!--  Top Bar  -->
 
@@ -54,12 +57,12 @@
           font-size: 1.5em;
         }
       </style>
-      <div class="flow-button-host">
+      <div class="flow-button-host next">
         <button onclick="Coach.nextCard(event)" id="next">
           Next
         </button>
       </div>
-      <div class="flow-button-host">
+      <div class="flow-button-host reveal">
         <button onclick="Coach.revealAnswer(event)" id="reveal" class="tooltip">
           Reveal
         </button>
@@ -72,7 +75,7 @@
       slider below.
     </tool-tip>
     <tool-tip target="confidence-rater">
-      Move this meter up or down to indicate your level of certainty in 
+      Move this slider up or down to indicate your level of certainty in 
       knowing the meaning of the current card. Top is "I know it 100%", 
       bottom is "I don't know it at all", anywhere in between is 
       "I know it this much".
