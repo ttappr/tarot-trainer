@@ -9,12 +9,12 @@ class ToolTip extends HTMLElement {
     }
     async _load() {
         // ctrl+click file:///./../html-partials/tool-tip.html
-        let html         = await loadText("./html-partials/tool-tip.html");
-        let tip          = this.textContent;
-        this.textContent = "";
-        let root         = this.shadowRoot;
-        root.innerHTML   = html;
-        this._span       = root.querySelector(".tip-content");
+        let html          = await loadText("./html-partials/tool-tip.html");
+        let tip           = this.textContent;
+        this.textContent  = "";
+        let root          = this.shadowRoot;
+        root.innerHTML    = html;
+        this._tip_content = root.querySelector(".tip-content");
 
         if (this.hasAttribute("target")) {
             var parent = document.querySelector(this.getAttribute("target"));
@@ -22,26 +22,27 @@ class ToolTip extends HTMLElement {
             var parent = this.parentElement;
         }
 
-        this._span.innerHTML = tip;
-        this._span.addEventListener("click", this._onTipClick.bind(this));
+        this._tip_content.innerHTML = tip;
+        this._tip_content.addEventListener("click", 
+                                           this._onTipClick.bind(this));
         parent.addEventListener("long-press", this._onQueryTip.bind(this));
         parent.addEventListener("contextmenu", this._onQueryTip.bind(this));
     }
     _onQueryTip(e) {
-        this._span.style.display = "block";
+        this._tip_content.style.display = "block";
         if (e.detail) {
-            this._span.style.left = `${e.detail.clientX}px`;
-            this._span.style.top = `${e.detail.clientY}px`;
+            this._tip_content.style.left = `${e.detail.clientX}px`;
+            this._tip_content.style.top = `${e.detail.clientY}px`;
         } else {
-            this._span.style.left = `${e.clientX}px`;
-            this._span.style.top = `${e.clientY}px`;
+            this._tip_content.style.left = `${e.clientX}px`;
+            this._tip_content.style.top = `${e.clientY}px`;
         }
-        this._span.style["z-index"] = 99;
+        this._tip_content.style["z-index"] = 99;
         e.preventDefault();
         return false;
     }
     _onTipClick(e) {
-        this._span.style.display = "none";
+        this._tip_content.style.display = "none";
     }
     /**
      * The attributes this element is interested in.
