@@ -1,5 +1,181 @@
 [
     {
+        "suit"    : "Major Arcana",
+        "value"   : "The Magician",
+        "pic"     : "pictorial-key-to-the-tarot.004.jpg",
+        "descr"   : "",
+        "meaning" : "Skill, diplomacy, address, subtlety; sickness, pain, loss, disaster, snares of enemies; self-confidence, will; the Querent, if male.",
+        "reverse" : "Physician, Magus, mental disease, disgrace, disquiet."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The High Priestess",
+        "pic"     : "pictorial-key-to-the-tarot.005.jpg",
+        "descr"   : "",
+        "meaning" : "Secrets, mystery, the future as yet unrevealed; the woman who interests the Querent, if male; the Querent herself, if female; silence, tenacity; mystery, wisdom, science.",
+        "reverse" : "Passion, moral or physical ardour, conceit, surface knowledge."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Empress",
+        "pic"     : "pictorial-key-to-the-tarot.006.jpg",
+        "descr"   : "",
+        "meaning" : "Fruitfulness, action, initiative, length of days; the unknown, clandestine; also difficulty, doubt, ignorance.",
+        "reverse" : "Light, truth, the unravelling of involved matters, public rejoicings; according to another reading, vacillation."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Emperor",
+        "pic"     : "pictorial-key-to-the-tarot.007.jpg",
+        "descr"   : "",
+        "meaning" : "Stability, power, protection, realization; a great person; aid, reason, conviction; also authority and will.",
+        "reverse" : "Benevolence, compassion, credit; also confusion to enemies, obstruction, immaturity."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Hierophant",
+        "pic"     : "pictorial-key-to-the-tarot.008.jpg",
+        "descr"   : "",
+        "meaning" : "Marriage, alliance, captivity, servitude; by another account, mercy and goodness; inspiration; the man to whom the Querent has recourse. ",
+        "reverse" : "Society, good understanding, concord, overkindness, weakness."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Lovers",
+        "pic"     : "pictorial-key-to-the-tarot.009.jpg",
+        "descr"   : "",
+        "meaning" : "Attraction, love, beauty, trials overcome.",
+        "reverse" : "Failure, foolish designs. Another account speaks of marriage frustrated and contrarieties of all kinds."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Chariot",
+        "pic"     : "pictorial-key-to-the-tarot.010.jpg",
+        "descr"   : "",
+        "meaning" : "Succour, providence also war, triumph, presumption, vengeance, trouble.",
+        "reverse" : "Riot, quarrel, dispute, litigation, defeat."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "Fortitude",
+        "pic"     : "pictorial-key-to-the-tarot.011.jpg",
+        "descr"   : "",
+        "meaning" : "Power, energy, action, courage, magnanimity; also complete success and honours.",
+        "reverse" : "Despotism, abuse if power, weakness, discord, sometimes even disgrace."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Hermit",
+        "pic"     : "pictorial-key-to-the-tarot.012.jpg",
+        "descr"   : "",
+        "meaning" : "Prudence, circumspection; also and especially treason, dissimulation, roguery, corruption.",
+        "reverse" : "Concealment, disguise, policy, fear, unreasoned caution."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Wheel of Fortune",
+        "pic"     : "pictorial-key-to-the-tarot.013.jpg",
+        "descr"   : "",
+        "meaning" : "Destiny, fortune, success, elevation, luck, felicity.",
+        "reverse" : "Increase, abundance, superfluity."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "Justice",
+        "pic"     : "pictorial-key-to-the-tarot.014.jpg",
+        "descr"   : "",
+        "meaning" : "Equity, rightness, probity, executive; triumph of the deserving side in law.",
+        "reverse" : "Law in all its departments, legal complications, bigotry, bias, excessive severity."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Hanged Man",
+        "pic"     : "pictorial-key-to-the-tarot.015.jpg",
+        "descr"   : "",
+        "meaning" : "Wisdom, circumspection, discernment, trials, sacrifice, intuition, divination, prophecy.",
+        "reverse" : "Selfishness, the crowd, body politic."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "Death",
+        "pic"     : "pictorial-key-to-the-tarot.016.jpg",
+        "descr"   : "",
+        "meaning" : "End, mortality, destruction, corruption also, for a man, the loss of a benefactor for a woman, many contrarieties; for a maid, failure of marriage projects.",
+        "reverse" : "Inertia, sleep, lethargy, petrifaction, somnambulism; hope destroyed."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "Temperance",
+        "pic"     : "pictorial-key-to-the-tarot.017.jpg",
+        "descr"   : "",
+        "meaning" : "Economy, moderation, frugality, management, accommodation.",
+        "reverse" : "Things connected with churches, religions, sects, the priesthood, sometimes even the priest who will marry the Querent; also disunion, unfortunate combinations, competing interests."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Devil",
+        "pic"     : "pictorial-key-to-the-tarot.018.jpg",
+        "descr"   : "",
+        "meaning" : "Ravage, violence, vehemence, extraordinary efforts, force, fatality; that which is predestined but is not for this reason evil.",
+        "reverse" : "Evil fatality, weakness, pettiness, blindness."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Tower",
+        "pic"     : "pictorial-key-to-the-tarot.019.jpg",
+        "descr"   : "",
+        "meaning" : "Misery, distress, indigence, adversity, calamity, disgrace, deception, ruin. It is a card in particular of unforeseen catastrophe.",
+        "reverse" : "According to one account, the same in a lesser degree also oppression, imprisonment, tyranny."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Star",
+        "pic"     : "pictorial-key-to-the-tarot.020.jpg",
+        "descr"   : "",
+        "meaning" : "Loss, theft, privation, abandonment; another reading says-hope and bright prospects.",
+        "reverse" : "Arrogance, haughtiness, impotence."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Moon",
+        "pic"     : "pictorial-key-to-the-tarot.021.jpg",
+        "descr"   : "",
+        "meaning" : "Hidden enemies, danger, calumny, darkness, terror, deception, occult forces, error.",
+        "reverse" : "Instability, inconstancy, silence, lesser degrees of deception and error."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Sun",
+        "pic"     : "pictorial-key-to-the-tarot.022.jpg",
+        "descr"   : "",
+        "meaning" : "Material happiness, fortunate marriage, contentment.",
+        "reverse" : "The same in a lesser sense (Material happiness, fortunate marriage, contentment)."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Last Judgement",
+        "pic"     : "pictorial-key-to-the-tarot.023.jpg",
+        "descr"   : "",
+        "meaning" : "Change of position, renewal, outcome. Another account specifies total loss though lawsuit.",
+        "reverse" : "Weakness, pusillanimity, simplicity; also deliberation, decision, sentence."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The Fool",
+        "pic"     : "pictorial-key-to-the-tarot.024.jpg",
+        "descr"   : "",
+        "meaning" : "Folly, mania, extravagance, intoxication, delirium, frenzy, bewrayment.",
+        "reverse" : "Negligence, absence, distribution, carelessness, apathy, nullity, vanity."
+    },
+    {
+        "suit"    : "Major Arcana",
+        "value"   : "The World",
+        "pic"     : "pictorial-key-to-the-tarot.025.jpg",
+        "descr"   : "",
+        "meaning" : "Assured success, recompense, voyage, route, emigration, flight, change of place.",
+        "reverse" : "Inertia, fixity, stagnation, permanence."
+    },
+    {
         "suit"    : "Wands",
         "value"   : "King",
         "pic"     : "pictorial-key-to-the-tarot.026.jpg",

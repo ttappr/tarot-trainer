@@ -24,12 +24,19 @@ class ToolTip extends HTMLElement {
 
         this._span.innerHTML = tip;
         this._span.addEventListener("click", this._onTipClick.bind(this));
-        parent.addEventListener("contextmenu", this._onContextMenu.bind(this));
+        parent.addEventListener("long-press", this._onQueryTip.bind(this));
+        parent.addEventListener("contextmenu", this._onQueryTip.bind(this));
     }
-    _onContextMenu(e) {
+    _onQueryTip(e) {
         this._span.style.display = "block";
-        this._span.style.left = `${e.pageX}px`;
-        this._span.style.top = `${e.pageY}px`;
+        if (e.detail) {
+            this._span.style.left = `${e.detail.clientX}px`;
+            this._span.style.top = `${e.detail.clientY}px`;
+        } else {
+            this._span.style.left = `${e.clientX}px`;
+            this._span.style.top = `${e.clientY}px`;
+        }
+        this._span.style["z-index"] = 99;
         e.preventDefault();
         return false;
     }

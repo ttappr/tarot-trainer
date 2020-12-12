@@ -7,7 +7,7 @@
  * @type Coach
  */
 var _instance = null;
-var _DATA_VERSION  = "0.0.1";
+var _DATA_VERSION  = "0.0.1.2";
 
 /**
  * The high level component that interacts with the various other components of
