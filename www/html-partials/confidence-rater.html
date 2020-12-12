@@ -33,9 +33,9 @@
         transform: rotate(-90deg) 
                    translate(calc(-100% + var(--slider-height) / 2));
                    /* The center point of rotation was left-center, so the 
-                      downward translation will be from that point. This
-                      positions the slider too far down by half the height, so
-                      that has to be adjusted. */
+                      downward translation of 100% will be from that point. This
+                      positions the slider too far down by half the height.
+                      the calc() expression corrects for that. */
         left: 50%;
     }
 

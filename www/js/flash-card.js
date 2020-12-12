@@ -16,18 +16,18 @@ class FlashCard {
     constructor(suit, value, pic, descr, meaning, reverse) {
         Object.assign(
             this, {
-                _suit    : suit,
-                _value   : value,
-                _pic     : pic,
-                _descr   : descr,
-                _meaning : meaning,
-                _reverse : reverse
+                _suit: suit,
+                _value: value,
+                _pic: pic,
+                _descr: descr,
+                _meaning: meaning,
+                _reverse: reverse
             });
 
-        this._inverted  = false;
-        this._image     = this.face;
-        this._meaning   = document.createElement("p");
-        this._reverse   = document.createElement("p");
+        this._inverted = false;
+        this._image = this.face;
+        this._meaning = document.createElement("p");
+        this._reverse = document.createElement("p");
         this._meaning.innerHTML = meaning;
         this._reverse.innerHTML = reverse;
     }
@@ -117,7 +117,9 @@ class FlashCardDeck extends HTMLElement {
      */
     constructor() {
         super();
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({
+            mode: 'open'
+        });
         this._cards = {};
         this._current = null;
         this._load();
@@ -127,8 +129,8 @@ class FlashCardDeck extends HTMLElement {
         let html = await loadText("./html-partials/flash-card.html");
         this.shadowRoot.innerHTML = html;
 
-        this._face  = this.shadowRoot.getElementById("face");
-        this._back  = this.shadowRoot.getElementById("back");
+        this._face = this.shadowRoot.getElementById("face");
+        this._back = this.shadowRoot.getElementById("back");
         this._title = this.shadowRoot.getElementById("title");
 
         let data = JSON.parse(await loadText("./data/card-data.json"));
@@ -136,8 +138,8 @@ class FlashCardDeck extends HTMLElement {
         for (let obj of data) {
             let card = new FlashCard(...Object.values(obj));
 
-            this._cards[card.id         ] = [card, false];
-            this._cards[card.id + '_rev'] = [card, true ];
+            this._cards[card.id] = [card, false];
+            this._cards[card.id + '_rev'] = [card, true];
         }
         let i = Math.floor(Math.random() * this.numCards);
         let [c, r] = Object.values(this._cards)[i];
@@ -206,7 +208,7 @@ class FlashCardDeck extends HTMLElement {
     revealAnswer() {
         // TODO - This fade-in code might be cleaned up a bit.
         let child = this._back.firstChild;
-        let back  = this._back;
+        let back = this._back;
         back.removeChild(child);
         child.classList.add("fade-in");
         back.style.visibility = "visible";
@@ -230,5 +232,3 @@ class FlashCardDeck extends HTMLElement {
 }
 
 customElements.define("flash-card-deck", FlashCardDeck);
-
-

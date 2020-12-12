@@ -10,6 +10,7 @@
   <script type="text/javascript" src="./js/flash-card.js"></script>
   <script type="text/javascript" src="./js/round-gauge.js"></script>
   <script type="text/javascript" src="./js/confidence-rater.js"></script>
+  <script type="text/javascript" src="./js/tool-tip.js"></script>
   <script type="text/javascript" src="./js/coach.js"></script>
 
   <link rel="shortcut icon" href="./IMG_3363.jpeg">
@@ -21,7 +22,17 @@
   <noscript>
     <p>Please enable JavaScript to use this application.</p>
   </noscript>
-  
+  <style>
+    .tutor {
+      visibility: hidden;
+    }
+    .tutor:hover {
+      visibility:visible;
+    }
+    button {
+      user-select: none;
+    }
+  </style>
   <!--  Top Bar  -->
 
   <div class="topbar"></div>
@@ -46,21 +57,46 @@
           font-size: 1.5em;
         }
       </style>
-      <div class="flow-button-host">
+      <div class="flow-button-host next">
         <button onclick="Coach.nextCard(event)" id="next">
           Next
         </button>
       </div>
-      <div class="flow-button-host">
+      <div class="flow-button-host reveal">
         <button onclick="Coach.revealAnswer(event)" id="reveal" class="tooltip">
           Reveal
         </button>
       </div>
     </div>
 
+    <tool-tip target="round-gauge">
+      This gauge shows your overall knowledge of all the cards. This is
+      determined from the certainty you've given to each card on the
+      slider below.
+    </tool-tip>
+    <tool-tip target="confidence-rater">
+      Move this slider up or down to indicate your level of certainty in 
+      knowing the meaning of the current card. Top is "I know it 100%", 
+      bottom is "I don't know it at all", anywhere in between is 
+      "I know it this much".
+    </tool-tip>
+    <tool-tip target="#reveal">
+      Press this button to reveal the card's meaning after reciting what you 
+      remember of it to yourself.
+    </tool-tip>
+    <tool-tip target="#next">
+      After you've adjusted your certainty score on the slider above,
+      press this button to draw the next card.
+    </tool-tip>
+
     <div class="deck-panel">
       <flash-card-deck></flash-card-deck>
     </div>
+
+    <tool-tip target="flash-card-deck">
+      What does this card mean? Recite what you remember of the meaning of the 
+      displayed card.
+    </tool-tip>
 
   </div>
   <script>
