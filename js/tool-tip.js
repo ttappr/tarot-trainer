@@ -16,9 +16,9 @@ class ToolTip extends HTMLElement {
         let root          = this.shadowRoot;
         root.innerHTML    = html;
         let tc            = root.querySelector(".tip-content");
+        let target        = this.getAttribute("target") 
         this._tip_content = tc;
         tc.innerHTML      = tip;
-        let target        = this.getAttribute("target") 
 
         target = (target) ? document.querySelector(target) : this.parentElement;
 
@@ -27,7 +27,7 @@ class ToolTip extends HTMLElement {
         target.addEventListener("mousemove",   this._cancelTimer.bind(this))
         target.addEventListener("contextmenu", this._showTip.bind(this));
 
-        tc.addEventListener("click", this._dismissTip.bind(this));
+        document.addEventListener("mousedown", this._dismissTip.bind(this));
     }
     _startTimer(e) {
         this._pressTimer = setTimeout(this._showTip.bind(this), 
