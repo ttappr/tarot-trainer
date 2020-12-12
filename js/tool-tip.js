@@ -36,6 +36,7 @@ class ToolTip extends HTMLElement {
             this._span.style.left = `${e.clientX}px`;
             this._span.style.top = `${e.clientY}px`;
         }
+        this._span.style["z-index"] = 99;
         e.preventDefault();
         return false;
     }
