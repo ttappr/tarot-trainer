@@ -29,8 +29,8 @@ class ToolTip extends HTMLElement {
     }
     _onContextMenu(e) {
         this._span.style.display = "block";
-        this._span.style.left = `${e.pageX}px`;
-        this._span.style.top = `${e.pageY}px`;
+        this._span.style.left = `${e.clientX}px`;
+        this._span.style.top = `${e.clientY}px`;
         e.preventDefault();
         return false;
     }
