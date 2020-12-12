@@ -24,6 +24,7 @@ class ToolTip extends HTMLElement {
 
         this._span.innerHTML = tip;
         this._span.addEventListener("click", this._onTipClick.bind(this));
+        parent.addEventListener("long-press", this._onContextMenu.bind(this));
         parent.addEventListener("contextmenu", this._onContextMenu.bind(this));
     }
     _onContextMenu(e) {
