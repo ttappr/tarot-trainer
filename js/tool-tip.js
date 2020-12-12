@@ -29,8 +29,13 @@ class ToolTip extends HTMLElement {
     }
     _onQueryTip(e) {
         this._span.style.display = "block";
-        this._span.style.left = `${e.x}px`;
-        this._span.style.top = `${e.y}px`;
+        if (e.detail) {
+            this._span.style.left = `${e.detail.clientX}px`;
+            this._span.style.top = `${e.detail.clientY}px`;
+        } else {
+            this._span.style.left = `${e.clientX}px`;
+            this._span.style.top = `${e.clientY}px`;
+        }
         e.preventDefault();
         return false;
     }
