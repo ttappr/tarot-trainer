@@ -128,10 +128,11 @@ class FlashCardDeck extends HTMLElement {
         // Related file: file:///./../html-partials/flash-card.html
         let html = await loadText("./html-partials/flash-card.html");
         this.shadowRoot.innerHTML = html;
+        let gid = s => this.shadowRoot.getElementById(s);
 
-        this._face = this.shadowRoot.getElementById("face");
-        this._back = this.shadowRoot.getElementById("back");
-        this._title = this.shadowRoot.getElementById("title");
+        this._face  = gid("face");
+        this._back  = gid("back");
+        this._title = gid("title");
 
         let data = JSON.parse(await loadText("./data/card-data.json"));
 
