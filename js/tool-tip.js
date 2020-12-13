@@ -1,9 +1,15 @@
 
-
+/**
+ * tool-tip elements display helpful text on long presses or context menu 
+ * clicks. The target element for the tool-tip is listened to for events.
+ * The target element is either supplied using the 'target' HTML tag attribute
+ * or it will be set to the tool-tip element's immediate parent.
+ */
 class ToolTip extends HTMLElement {
     constructor(value) {
         super();
         this.attachShadow({mode: 'open'});
+        this._tip_content = null
         this._pressTimer = null;
         this._timeout = 1000;
         this._load();
@@ -16,9 +22,9 @@ class ToolTip extends HTMLElement {
         let root          = this.shadowRoot;
         root.innerHTML    = html;
         let tc            = root.querySelector(".tip-content");
-        let target        = this.getAttribute("target") 
         this._tip_content = tc;
         tc.innerHTML      = tip;
+        let target        = this.getAttribute("target") 
 
         target = (target) ? document.querySelector(target) : this.parentElement;
 
@@ -31,8 +37,7 @@ class ToolTip extends HTMLElement {
     }
     _startTimer(e) {
         this._pressTimer = setTimeout(this._showTip.bind(this), 
-                                      this._timeout, e);
-        //e.preventDefault();
+                                    this._timeout, e);
         return false;
     }
     _cancelTimer(e) {
