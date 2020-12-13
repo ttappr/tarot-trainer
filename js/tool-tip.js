@@ -32,7 +32,7 @@ class ToolTip extends HTMLElement {
     _startTimer(e) {
         this._pressTimer = setTimeout(this._showTip.bind(this), 
                                       this._timeout, e);
-        e.preventDefault();
+        //e.preventDefault();
         return false;
     }
     _cancelTimer(e) {
