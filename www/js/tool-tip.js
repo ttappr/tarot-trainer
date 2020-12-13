@@ -1,4 +1,5 @@
 
+'use strict';
 /**
  * tool-tip elements display helpful text on long presses or context menu 
  * clicks. The target element for the tool-tip is listened to for events.
@@ -34,10 +35,11 @@ class ToolTip extends HTMLElement {
         target.addEventListener("contextmenu", this._showTip.bind(this));
 
         document.addEventListener("mousedown", this._dismissTip.bind(this));
+        document.addEventListener("touchstart", this._dismissTip.bind(this));
     }
     _startTimer(e) {
         this._pressTimer = setTimeout(this._showTip.bind(this), 
-                                    this._timeout, e);
+                                      this._timeout, e);
         return false;
     }
     _cancelTimer(e) {

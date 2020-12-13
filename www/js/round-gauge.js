@@ -14,10 +14,10 @@ class RoundGauge extends HTMLElement {
         // ctrl+click file:///./../html-partials/round-gauge.html
         let html = await loadText("./html-partials/round-gauge.html");
         this.shadowRoot.innerHTML = html;
-
-        this._gauge = this.shadowRoot.querySelector(".gauge");
-        this._fill  = this.shadowRoot.querySelector(".gauge__fill");
-        this._cover = this.shadowRoot.querySelector(".gauge__cover");
+        let qs = s => this.shadowRoot.querySelector(s);
+        this._gauge = qs(".gauge");
+        this._fill  = qs(".gauge__fill");
+        this._cover = qs(".gauge__cover");
         
         this._ready = true;
         this.value  = this._value;
