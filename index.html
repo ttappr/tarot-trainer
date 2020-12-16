@@ -24,12 +24,6 @@
     <p>Please enable JavaScript to use this application.</p>
   </noscript>
   <style>
-    .tutor {
-      visibility: hidden;
-    }
-    .tutor:hover {
-      visibility:visible;
-    }
     button {
       user-select: none;
       -webkit-user-select: none; -webkit-touch-callout: none;
@@ -38,7 +32,6 @@
   <!--  Top Bar  -->
 
   <div class="topbar">
-    <!-- <side-nav></side-nav> -->
   </div>
 
   <!--  Content Panel  -->
@@ -72,6 +65,11 @@
         </button>
       </div>
     </div>
+    <div class="deck-panel">
+      <flash-card-deck></flash-card-deck>
+    </div>
+
+    <config-panel></config-panel>
 
     <tool-tip target="round-gauge">
       This gauge shows your overall knowledge of all the cards. This is
@@ -92,11 +90,6 @@
       After you've adjusted your certainty score on the slider above,
       press this button to draw the next card.
     </tool-tip>
-
-    <div class="deck-panel">
-      <flash-card-deck></flash-card-deck>
-    </div>
-
     <tool-tip target="flash-card-deck">
       What does this card mean? Recite what you remember of the meaning of the 
       displayed card before clicking Reveal.
