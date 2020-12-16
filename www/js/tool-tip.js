@@ -7,7 +7,7 @@
  * or it will be set to the tool-tip element's immediate parent.
  */
 class ToolTip extends HTMLElement {
-    constructor(value) {
+    constructor() {
         super();
         this.attachShadow({mode: 'open'});
         this._tip_content = null
@@ -31,7 +31,7 @@ class ToolTip extends HTMLElement {
 
         target.addEventListener("mousedown",   this._startTimer.bind(this));
         target.addEventListener("mouseup",     this._cancelTimer.bind(this));
-        target.addEventListener("mousemove",   this._cancelTimer.bind(this))
+        target.addEventListener("mousemove",   this._cancelTimer.bind(this));
         target.addEventListener("contextmenu", this._showTip.bind(this));
 
         document.addEventListener("mousedown", this._dismissTip.bind(this));
@@ -50,7 +50,7 @@ class ToolTip extends HTMLElement {
         let tc = this._tip_content;
         tc.style.left = e.clientX + 'px';
         tc.style.top = e.clientY + 'px';
-        tc.style["z-index"] = 99;
+        tc.style["z-index"] = 1;
         tc.style.display = "block";
     }
     _dismissTip(e) {
