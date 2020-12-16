@@ -39,12 +39,16 @@ class ConfigPanel extends HTMLElement {
         for (let dd of dds) {
             dd.appendChild(this._buildList());
         }
+        this._rangeStart = qs("#range-start .range-list")
+        this._rangeEnd   = qs("#range-end .range-list");
+        this._dds        = dds;
     }
     _onSuitInput(e) {
         // e.target.value in ['rods','swords','cups','coins','major-arcana'].
-        console.info(`e.target.value="${e.target.value}"`);
-        console.info(`e.target.checked="${e.target.checked}"`);
-        console.info(`this=${this}`);
+        for (let dd of this._dds) {
+            dd.innerHTML = "";
+            dd.appendChild(this._buildList());
+        }
     }
     _buildList() {
         let suits = this._suits;
@@ -87,7 +91,21 @@ class ConfigPanel extends HTMLElement {
         p.appendChild(span);
     }
     _onRangeClick(e) {
-        let value = e.target["range-value"];
+        let value  = e.target.getAttribute("range-value");
+        let parent = e.target.parentElement;
+        let range  = parent.parentElement
+                           .parentElement
+                           .querySelector(".range-list");
+        let elms   = parent.querySelectorAll(`[range-value='${value}']`);
+        range.innerHTML = "";
+        let seen = [];
+        for (let e of elms) {
+            if (!seen.includes(e.textContent)) {
+                seen.push(e.textContent);
+                range.appendChild(e.cloneNode(true));
+            }
+        }
+        console.info(`value=${value}`);
     }
     openMenu() {
         this._side.style.width = "250px";

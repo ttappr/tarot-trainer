@@ -9,7 +9,7 @@
         color:  white;
         right: 15px;
         /* height: 80%; */
-        width: 50%;
+        width: 600px;
         user-select: none;
         font-size: larger;
         z-index: 1;
@@ -59,6 +59,10 @@
     .range-select:focus .dropdown-content {
         display: block;
     }
+    .range-select > .range-list {
+        width: 190px;
+        padding-left: 4px;
+    }
 </style>
 
 
@@ -68,13 +72,13 @@
         <input type="checkbox" id="rods" name="suit" value="rods">
         <label for="rods">Rods/Wands</label>
 
-        <input type="checkbox" id="cups" name="suit" value="cups" checked>
+        <input type="checkbox" id="cups" name="suit" value="cups" >
         <label for="cups">Cups</label>
 
         <input type="checkbox" id="swords" name="suit" value="swords">
         <label for="swords">Swords</label>
 
-        <input type="checkbox" id="coins" name="suit" value="coins">
+        <input type="checkbox" id="coins" name="suit" value="coins" checked>
         <label for="coins">Coins/Pentagrams</label>
 
         <input type="checkbox" id="major-arcana" name="suit" 
@@ -86,12 +90,12 @@
     <div id="range-select">
         <span>Start</span>
         <div id="range-start" class="range-select" tabindex="0">
-            1. Ace, Magician
+            <div class="range-list" range-two>1. Ace, Magician</div>
             <div class="dropdown-content"></div>
         </div>
         <span>End</span>
         <div id="range-end" class="range-select" tabindex="0">
-            12. Queen, Hanged Man
+            <div class="range-list" range-two>12. Queen, Hanged Man</div>
             <div class="dropdown-content"></div>
         </div>
     </div>
