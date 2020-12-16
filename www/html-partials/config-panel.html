@@ -9,7 +9,7 @@
         color:  white;
         right: 15px;
         /* height: 80%; */
-        width: 40%;
+        width: 600px;
         user-select: none;
         font-size: larger;
         z-index: 1;
@@ -17,46 +17,87 @@
     #config input {
         text-align: right;
     }
+    .range-list {
+        display: inline-grid;
+        justify-content: start;
+        grid-template-columns: auto auto;
+        column-gap: 15px;
+        row-gap: 5px;
+    }
+    .range-list[range-two] {
+        grid-template-columns: auto auto auto;
+    }
+    #suit-select {
+        display: inline-grid;
+        justify-content: start;
+        grid-template-columns: auto auto auto auto;
+        grid-gap: 7px;
+    }
+    #range-select > * {
+        float: left;
+        margin-right: 7px;
+        margin-left: 7px;
+    }
+    .range-select {
+        color: #009578;
+        background: white;
+    }
+    .range-select:focus {
+        outline: 2px solid #004033;
+    }
+    .range-select .dropdown-content {
+        display: none;
+        position: absolute;
+        z-index: 2;
+        background-color: white;
+        color: #009578;
+        border: 5px solid #009578;
+        padding: 5px;
+        max-height: 350px;
+        overflow-y: auto;
+    }
+    .range-select:focus .dropdown-content {
+        display: block;
+    }
+    .range-select > .range-list {
+        width: 190px;
+        padding-left: 4px;
+    }
 </style>
 
 
 <div id="config">
     <div>Include:</div>
-    <style>
-        #suit-select {
-            display: inline-grid;
-            justify-content: start;
-            grid-template-columns: auto auto auto auto;
-            grid-gap: 7px;
-        }
-    </style>
     <div id="suit-select">
         <input type="checkbox" id="rods" name="suit" value="rods">
         <label for="rods">Rods/Wands</label>
 
-        <input type="checkbox" id="cups" name="suit" value="cups">
+        <input type="checkbox" id="cups" name="suit" value="cups" >
         <label for="cups">Cups</label>
 
         <input type="checkbox" id="swords" name="suit" value="swords">
         <label for="swords">Swords</label>
 
-        <input type="checkbox" id="coins" name="suit" value="coins">
+        <input type="checkbox" id="coins" name="suit" value="coins" checked>
         <label for="coins">Coins/Pentagrams</label>
 
         <input type="checkbox" id="major-arcana" name="suit" 
-                value="major-arcana">
+                value="major-arcana" checked>
         <label for="major-arcana">Major Arcana</label>
     </div>  
 
     <div>Range:</div>
     <div id="range-select">
-        <label for="start">Start</label>
-        <input type="number" id="start" value="0" min="1" max="72" 
-                justify="right" style="width: 50px;">
-
-        <label for="end" style="margin-left:10px">End</label>
-        <input type="number" id="end" value="10" min="1" max="72" 
-                justify="right" style="width: 50px;">
+        <span>Start</span>
+        <div id="range-start" class="range-select" tabindex="0">
+            <div class="range-list" range-two>1. Ace, Magician</div>
+            <div class="dropdown-content"></div>
+        </div>
+        <span>End</span>
+        <div id="range-end" class="range-select" tabindex="0">
+            <div class="range-list" range-two>12. Queen, Hanged Man</div>
+            <div class="dropdown-content"></div>
+        </div>
     </div>
 </div>
 
