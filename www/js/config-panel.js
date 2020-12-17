@@ -87,6 +87,7 @@ class ConfigPanel extends HTMLElement {
     _addRItem(p, txt, v) {
         let span = document.createElement("span");
         span.innerHTML = txt
+        //span.setAttribute("tabindex", "0");
         span.setAttribute("range-value", v);
         p.appendChild(span);
     }

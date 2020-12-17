@@ -23,6 +23,7 @@
         grid-template-columns: auto auto;
         column-gap: 15px;
         row-gap: 5px;
+        color: #004033;
     }
     .range-list[range-two] {
         grid-template-columns: auto auto auto;
@@ -30,7 +31,7 @@
     #suit-select {
         display: inline-grid;
         justify-content: start;
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto auto;
         grid-gap: 7px;
     }
     #range-select > * {
@@ -50,7 +51,7 @@
         position: absolute;
         z-index: 2;
         background-color: white;
-        color: #009578;
+        color: #004033;
         border: 5px solid #009578;
         padding: 5px;
         max-height: 350px;
@@ -75,15 +76,16 @@
         <input type="checkbox" id="cups" name="suit" value="cups" >
         <label for="cups">Cups</label>
 
+        <input type="checkbox" id="major-arcana" name="suit" 
+                value="major-arcana" checked>
+        <label for="major-arcana">Major Arcana</label>
+
         <input type="checkbox" id="swords" name="suit" value="swords">
         <label for="swords">Swords</label>
 
         <input type="checkbox" id="coins" name="suit" value="coins" checked>
         <label for="coins">Coins/Pentagrams</label>
 
-        <input type="checkbox" id="major-arcana" name="suit" 
-                value="major-arcana" checked>
-        <label for="major-arcana">Major Arcana</label>
     </div>  
 
     <div>Range:</div>

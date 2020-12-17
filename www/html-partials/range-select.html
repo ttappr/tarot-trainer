@@ -1,0 +1,70 @@
+<style>
+    :host {
+        --highlight-color: yellow;
+        --border-color: green;
+        --color: darkgreen;
+        --background-color: white;
+        --width: 300px;
+    }
+    * {
+        box-sizing: border-box;
+    }
+    .range-select {
+        width: var(--width);
+        border: solid var(--border-color)
+    }
+    .range-value {
+        height: 1.5em;
+        width: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--color);
+        background-color: var(--background-color);
+    }
+    .range-select:focus table {
+        display: block;
+    }
+    table {
+        display: none;
+        position: absolute;
+        background-color: var(--background-color);
+        color: var(--color);
+        border: solid var(--border-color);
+        z-index: 1;
+    }
+    tr {
+        text-align: left;
+    }
+    th, td {
+        padding: 3px 6px;
+    }
+    .highlight {
+        background-color: var(--highlight-color);
+    }            
+</style>
+
+<div class="range-select" tabindex="0">
+    <div class="range-value"></div>
+    <table cellspacing="0" cellpadding="0">
+        <!--
+            <tr nrow="-1">
+                <th>Order</th>
+                <th>Minor</th>
+                <th>Major</th>
+            </tr>
+            <tr nrow="0">
+                <td>0</td>
+                <td></td>
+                <td>Fool</td>
+            </tr>
+            <tr nrow="1">
+                <td>1</td>
+                <td>Ace</td>
+                <td>Magician</td>
+            </tr>
+        -->
+    </table>
+</div>

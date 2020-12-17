@@ -7,3 +7,5 @@ node_modules/
 /plugins/
 /platforms/
 /_experimenting/
+_experiments_/data-table.html
+_experiments_/gridded-select.html
