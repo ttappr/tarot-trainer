@@ -110,10 +110,10 @@ class RangeSelect extends HTMLElement {
         let hi = chtxt(this._rows[this._high]);
 
         let val = `<b>${this._low}</b> &nbsp;` +
-                  `<span style="color: var(--border-color)">(${lo})</span> ` + 
-                  `&nbsp; to &nbsp; ` +
+                  `<span class="bc">(${lo})</span> ` + 
+                  `&nbsp; <i><b>to</b></i> &nbsp; ` +
                   `<b>${this._high}</b> &nbsp;` + 
-                  `<span style="color: var(--border-color)">(${hi})</span>`;
+                  `<span class="bc">(${hi})</span>`;
 
         // Display the string.
         this._value.innerHTML = val;
