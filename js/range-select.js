@@ -109,7 +109,9 @@ class RangeSelect extends HTMLElement {
         let lo = chtxt(this._rows[this._low ]);
         let hi = chtxt(this._rows[this._high]);
 
-        let val = `<b>${this._low}</b> &nbsp;<i>(${lo})</i> &nbsp; to &nbsp; <b>${this._high}</b> &nbsp;<i>(${hi})</i>`;
+        let val = `<b>${this._low}</b> &nbsp;<i>(${lo})</i> ` + 
+                  `&nbsp; to &nbsp; ` +
+                  `<b>${this._high}</b> &nbsp;<i>(${hi})</i>`;
 
         // Display the string.
         this._value.innerHTML = val;
