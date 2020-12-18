@@ -17,6 +17,10 @@ class ConfigPanel extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
+        this._range = { start: -1, end: -1 };
+        this._suits = { cups: false, swords: false, 
+                        coins: false, rods: false,
+                        'major-arcana': false, reverse: false };
         this._load();
     }    
     async _load() {
@@ -38,7 +42,15 @@ class ConfigPanel extends HTMLElement {
         range.loaded = (range) => {
             this._populateRange(range);
         }
+        range.addEventListener("range", this._onRange.bind(this));
     }
+    get range() {
+        return { ...this._range };
+    }
+    get suits() {
+        return { ...this._suits };
+    }
+
     _populateRange(range) {
         range.addHeader("Order", "Minor", "Major");
         for (let i = 0; i < 22; i++) {
@@ -46,11 +58,26 @@ class ConfigPanel extends HTMLElement {
             let major = _MAJOR_CARDS[i];
             range.addRow(i, minor, major);
         }
-        range.start = 1; range.end = 14;
+        range.start = 1; range.end = 14; // Default range.
 
     }
     _onSuitInput(e) {
-        // e.target.value in ['rods','swords','cups','coins','major-arcana'].
+        // e.target.value in ['rods','swords','cups','coins','major-arcana', 
+        //                    'reverse'].
+        console.info(`${e.target.value} checked: ${e.target.checked}`);
+        this._suits[e.target.value] = e.target.checked;
+    }
+    _onRange(e) {
+        this._range.start = e.detail.start;
+        this._range.end = e.detail.end;
+        console.info(e.detail);
+    }
+    _dispatchSuitSelect() {
+        let e = new CustomEvent("suit", {
+            bubbles: true,
+            detail: ""
+        });
+        this.dispatchEvent(e);
     }
     openMenu() {
         this._side.style.width = "250px";

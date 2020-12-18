@@ -109,15 +109,26 @@ class RangeSelect extends HTMLElement {
         let loNote = rangeNote(this._rows[this._low ]);
         let hiNote = rangeNote(this._rows[this._high]);
 
-        // Example: 1 (Ace, Magician)  to  11 (Page, Justice)
-        let val = `<b>${this._low}</b>&nbsp;` +
-                  `<span class="bc">(${loNote})</span>` + 
-                  `&nbsp;&nbsp;<i><b>to</b></i>&nbsp;&nbsp;` +
-                  `<b>${this._high}</b>&nbsp;` + 
-                  `<span class="bc">(${hiNote})</span>`;
+        // Example: "1 (Ace, Magician)  to  11 (Page, Justice)"
+        let val = `<b>${this._low}</b> ` +
+                  `<span class="bc"><i>(${loNote})</i></span>` + 
+                  `&nbsp;&nbsp;&nbsp;` + 
+                  `<i><b>to</b></i>` + 
+                  `&nbsp;&nbsp;&nbsp;` +
+                  `<b>${this._high}</b> ` + 
+                  `<span class="bc"><i>(${hiNote})</i></span>`;
 
         // Display the string.
         this._value.innerHTML = val;
+        this._dispatchRangeEvent(this._low, this._high);
+    }
+    _dispatchRangeEvent(start, end) {
+        // TODO - Include custom events in class documentation comments.
+        let e = new CustomEvent("range", {
+            bubbles: true,
+            detail: {start: start, end: end}
+        });
+        this.dispatchEvent(e);
     }
 }
 function rangeNote(tr) {
