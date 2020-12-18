@@ -12,7 +12,7 @@ class RangeSelect extends HTMLElement {
         this._nrows =  0;
         this._rows  = [];
         this._loaded    = false;
-        this._loadedcb  = o => {};
+        this._loadedcb  = rs => {};
         this._load();
     }
     async _load() {
@@ -106,20 +106,21 @@ class RangeSelect extends HTMLElement {
             }
         }
         // Generate a condensed string representation of the selected range.
-        let lo = chtxt(this._rows[this._low ]);
-        let hi = chtxt(this._rows[this._high]);
+        let loNote = rangeNote(this._rows[this._low ]);
+        let hiNote = rangeNote(this._rows[this._high]);
 
-        let val = `<b>${this._low}</b> &nbsp;` +
-                  `<span class="bc">(${lo})</span> ` + 
-                  `&nbsp; <i><b>to</b></i> &nbsp; ` +
-                  `<b>${this._high}</b> &nbsp;` + 
-                  `<span class="bc">(${hi})</span>`;
+        // Example: 1 (Ace, Magician)  to  11 (Page, Justice)
+        let val = `<b>${this._low}</b>&nbsp;` +
+                  `<span class="bc">(${loNote})</span>` + 
+                  `&nbsp;&nbsp;<i><b>to</b></i>&nbsp;&nbsp;` +
+                  `<b>${this._high}</b>&nbsp;` + 
+                  `<span class="bc">(${hiNote})</span>`;
 
         // Display the string.
         this._value.innerHTML = val;
     }
 }
-function chtxt(tr) {
+function rangeNote(tr) {
     let m = map    (tr.children, td => td.textContent.trim());
     let f = filter (m, t => t !== "");
     let s = slice  (f, 1);
