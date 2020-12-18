@@ -19,7 +19,7 @@ class ConfidenceRater extends HTMLElement {
 
         let container = this.shadowRoot.querySelector(".slidecontainer");
         let slider    = this.shadowRoot.querySelector(".slidecontainer input");
-        let orient    = this.attributes.orientation;
+        let orient    = this.attributes['orientation'];
         this._sizeObs = null;
         this._slider  = slider;
 
@@ -28,7 +28,7 @@ class ConfidenceRater extends HTMLElement {
         }
 
         if (orient && orient.value.toLowerCase() === "vertical") {
-            slider.setAttribute("orientation", "vertical");
+            slider.setAttribute("cr-orientation", "vertical");
 
             let obs = new ResizeObserver(
                 (entries) => {
