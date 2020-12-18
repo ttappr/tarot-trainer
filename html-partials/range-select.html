@@ -10,7 +10,8 @@
     }
     * {
         box-sizing: border-box;
-    }
+        user-select: none;
+        -webkit-user-select: none; -webkit-touch-callout: none;    }
     .range-select {
         width: var(--width);
         height: 1.5em;
@@ -31,8 +32,6 @@
     }
     .range-select:focus table {
         display: block;
-        user-select: none;
-        -webkit-user-select: none; -webkit-touch-callout: none;
     }
     table {
         display: none;
