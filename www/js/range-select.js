@@ -11,11 +11,13 @@ class RangeSelect extends HTMLElement {
         this._high  = -1;   // Index of range end.
         this._nrows =  0;
         this._rows  = [];
+        this._loaded    = false;
+        this._loadedcb  = rs => {};
         this._load();
     }
     async _load() {
         // Related file: file:///./../html-partials/range-select.html
-        let html = loadText("./html-partials/range-select.html");
+        let html = await loadText("./html-partials/range-select.html");
         this.shadowRoot.innerHTML = html;
         const qs = s => this.shadowRoot.querySelector(s);
 
@@ -25,6 +27,8 @@ class RangeSelect extends HTMLElement {
         this._table = qs("table");
 
         this._table.onclick = this._onClick.bind(this);
+        this._loaded = true;
+        this._loadedcb(this);
     }
     get start() {
         return this._low;
@@ -37,6 +41,12 @@ class RangeSelect extends HTMLElement {
     }
     set end(n) {
         this._select(n);
+    }
+    set loaded(cb) {
+        this._loadedcb = cb;
+        if (this._loaded) {
+            cb(this);
+        }
     }
     clearTable() {
         this._table.innerHTML = "";
@@ -96,15 +106,27 @@ class RangeSelect extends HTMLElement {
             }
         }
         // Generate a condensed string representation of the selected range.
-        const txt = (s) => s.trim().split(/\s\s+/).slice(1).join(', ');
+        let loNote = rangeNote(this._rows[this._low ]);
+        let hiNote = rangeNote(this._rows[this._high]);
 
-        let lo  = txt(this._rows[this._low ].textContent);
-        let hi  = txt(this._rows[this._high].textContent);
-        let val = `${this._low} (${lo}) to ${this._high} (${hi})`;
+        // Example: "1 (Ace, Magician)  to  11 (Page, Justice)"
+        let val = `<b>${this._low}</b> ` +
+                  `<span class="bc"><i>(${loNote})</i></span>` + 
+                  `&nbsp;&nbsp;&nbsp;` + 
+                  `<i><b>to</b></i>` + 
+                  `&nbsp;&nbsp;&nbsp;` +
+                  `<b>${this._high}</b> ` + 
+                  `<span class="bc"><i>(${hiNote})</i></span>`;
 
         // Display the string.
-        this._value.textContent = val;
+        this._value.innerHTML = val;
     }
+}
+function rangeNote(tr) {
+    let m = map    (tr.children, td => td.textContent.trim());
+    let f = filter (m, t => t !== "");
+    let s = slice  (f, 1);
+    return [...s].join(", ");
 }
 
 customElements.define("range-select", RangeSelect);

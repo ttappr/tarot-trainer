@@ -9,7 +9,7 @@
         color:  white;
         right: 15px;
         /* height: 80%; */
-        width: 600px;
+        width: 530px;
         user-select: none;
         font-size: larger;
         z-index: 1;
@@ -17,53 +17,17 @@
     #config input {
         text-align: right;
     }
-    .range-list {
-        display: inline-grid;
-        justify-content: start;
-        grid-template-columns: auto auto;
-        column-gap: 15px;
-        row-gap: 5px;
-        color: #004033;
-    }
-    .range-list[range-two] {
-        grid-template-columns: auto auto auto;
-    }
     #suit-select {
         display: inline-grid;
         justify-content: start;
         grid-template-columns: auto auto auto auto auto auto;
         grid-gap: 7px;
     }
-    #range-select > * {
-        float: left;
-        margin-right: 7px;
-        margin-left: 7px;
-    }
     .range-select {
         color: #009578;
         background: white;
     }
-    .range-select:focus {
-        outline: 2px solid #004033;
-    }
-    .range-select .dropdown-content {
-        display: none;
-        position: absolute;
-        z-index: 2;
-        background-color: white;
-        color: #004033;
-        border: 5px solid #009578;
-        padding: 5px;
-        max-height: 350px;
-        overflow-y: auto;
-    }
-    .range-select:focus .dropdown-content {
-        display: block;
-    }
-    .range-select > .range-list {
-        width: 190px;
-        padding-left: 4px;
-    }
+
 </style>
 
 
@@ -86,20 +50,11 @@
         <input type="checkbox" id="coins" name="suit" value="coins" checked>
         <label for="coins">Coins/Pentagrams</label>
 
+        <input type="checkbox" id="reverse" name="rev" value="reverse" checked>
+        <label for="reverse">Reversals</label>
     </div>  
 
     <div>Range:</div>
-    <div id="range-select">
-        <span>Start</span>
-        <div id="range-start" class="range-select" tabindex="0">
-            <div class="range-list" range-two>1. Ace, Magician</div>
-            <div class="dropdown-content"></div>
-        </div>
-        <span>End</span>
-        <div id="range-end" class="range-select" tabindex="0">
-            <div class="range-list" range-two>12. Queen, Hanged Man</div>
-            <div class="dropdown-content"></div>
-        </div>
-    </div>
+    <range-select id="range-select"></range-select>
 </div>
 
