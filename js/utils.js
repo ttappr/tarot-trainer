@@ -78,3 +78,25 @@ function wchoice(pop, wts) {
     let idx = acm.findIndex(elm => elm >= rnd);
     return pop[idx];
 }
+
+function *map(iterable, callback) {
+    for (let obj of iterable) {
+        yield callback(obj);
+    }
+}
+function *filter(iterable, callback) {
+    for (let obj of iterable) {
+        if (callback(obj)) {
+            yield obj;
+        }
+    }
+}
+function *slice(iterable, start, end) {
+    let i = 0;
+    for (let obj of iterable) {
+        if (i >= start && (end === undefined || i < end)) {
+            yield obj;
+        }
+        i++;
+    }
+}

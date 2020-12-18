@@ -1,0 +1,81 @@
+<style>
+    :host {
+        --border-color: #009578;
+        --color: #004033;
+        --background-color: white;
+        --highlight-color: var(--background-color);
+        --highlight-background-color: #009578;
+        --header-color: var(--border-color);
+        --width: 330px;
+    }
+    * {
+        box-sizing: border-box;
+    }
+    .range-select {
+        width: var(--width);
+        height: 1.5em;
+        border: solid var(--border-color);
+        background-color: var(--background-color);
+    }
+    .range-cell {
+        height: 100%;
+        width: 100%;
+        padding: 3px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--color);
+    }
+    .range-value {
+        overflow: hidden;
+    }
+    .range-select:focus table {
+        display: block;
+    }
+    table {
+        display: none;
+        position: absolute;
+        background-color: var(--background-color);
+        color: var(--color);
+        border: solid var(--border-color);
+        z-index: 1;
+    }
+    tr {
+        text-align: left;
+    }
+    th, td {
+        padding: 3px 6px;
+    }
+    th {
+        color: var(--header-color);
+    }
+    .highlight {
+        color: var(--highlight-color);
+        background-color: var(--highlight-background-color);
+    }            
+</style>
+
+<div class="range-select" tabindex="0">
+    <div class="range-cell">
+        <span class="range-value"></span>
+    </div>
+    <table cellspacing="0" cellpadding="0">
+        <!--
+        <tr nrow="-1">
+            <th>Order</th>
+            <th>Minor</th>
+            <th>Major</th>
+        </tr>
+        <tr nrow="0">
+            <td>0</td>
+            <td></td>
+            <td>Fool</td>
+        </tr>
+        <tr nrow="1">
+            <td>1</td>
+            <td>Ace</td>
+            <td>Magician</td>
+        </tr>
+        -->
+    </table>
+</div>
