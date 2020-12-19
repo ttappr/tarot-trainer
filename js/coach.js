@@ -168,7 +168,7 @@ class Coach {
             Coach._ordMajor = [ 
                 'Fool', 'Magician', 'High_Priestess', 'Empress', 
                 'Emperor', 'Hierophant', 'Lovers', 'Chariot', 
-                'Fortitude', 'Hermit', 'Weel_of_Fortune', 
+                'Fortitude', 'Hermit', 'Wheel_of_Fortune', 
                 'Justice', 'Hanged_Man', 'Death', 'Temperance', 
                 'Devil', 'Tower', 'Star', 'Moon', 'Sun', 
                 'Last_Judgement', 'World'
