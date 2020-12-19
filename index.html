@@ -70,7 +70,7 @@
       <flash-card-deck></flash-card-deck>
     </div>
 
-    <config-panel></config-panel>
+    <config-panel id="config-panel"></config-panel>
 
     <tool-tip target="round-gauge">
       This gauge shows your overall knowledge of all the cards. This is
@@ -101,6 +101,7 @@
     let coach         = Coach.instance;
     coach.nextInput   = document.querySelector("#next");
     coach.revealInput = document.querySelector("#reveal");
+    coach.configPanel = document.querySelector("#config-panel");
   </script>
 
   <!--  Status Bar  -->

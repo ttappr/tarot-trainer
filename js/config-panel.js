@@ -21,6 +21,7 @@ class ConfigPanel extends HTMLElement {
         this._suits = { cups: false, swords: false, 
                         coins: false, rods: false,
                         major_arcana: false, reverse: false };
+        this._initialized = false;
         this._load();
     }    
     async _load() {
@@ -35,20 +36,27 @@ class ConfigPanel extends HTMLElement {
         let suits   = qsa("#suit-select > input");
 
         suit.oninput = this._onSuitInput.bind(this);
-        this._suits  = {};
+
+        this._loadState();
+
         for (let s of suits) {
-            this._suits[s.value] = s.checked;
+            s.checked = this._suits[s.value];
         }
         range.loaded = (range) => {
             this._populateRange(range);
-        }
-        range.addEventListener("range", this._onRange.bind(this));
+        };
+        
+        this._initialized = true;
+        this._dispatchInitialized();
     }
     get range() {
         return { ...this._range };
     }
     get suits() {
         return { ...this._suits };
+    }
+    get initialized() {
+        return this._initialized;
     }
 
     _populateRange(range) {
@@ -58,8 +66,9 @@ class ConfigPanel extends HTMLElement {
             let major = _MAJOR_CARDS[i];
             range.addRow(i, minor, major);
         }
-        range.start = 1; range.end = 14; // Default range.
-
+        range.start = this._range.start; 
+        range.end   = this._range.end;
+        range.addEventListener("range", this._onRange.bind(this));
     }
     _onSuitInput(e) {
         // e.target.value in ['rods','swords','cups','coins','major-arcana', 
@@ -68,6 +77,7 @@ class ConfigPanel extends HTMLElement {
         let checked = e.target.checked;
         this._suits[suit] = checked;
         this._dispatchSuitSelect(suit, checked);
+        this._saveState();
     }
     _onRange(e) {
         this._range = e.detail;
@@ -76,6 +86,7 @@ class ConfigPanel extends HTMLElement {
             detail: { range: {...e.detail } }
         });
         this.dispatchEvent(e);
+        this._saveState();
     }
     _dispatchSuitSelect(suit, checked) {
         let e = new CustomEvent("suit", {
@@ -84,11 +95,30 @@ class ConfigPanel extends HTMLElement {
         });
         this.dispatchEvent(e);
     }
+    _dispatchInitialized() {
+        let e = new CustomEvent("initialized", {
+            bubbles: true,
+            detail: { suits: this.suits, range: this.range }
+        });
+        this.dispatchEvent(e);
+    }
     openMenu() {
         this._side.style.width = "250px";
     }
     closeMenu() {
         this._side.style.width = "0";
+    }
+    _saveState() {
+        setPData("range", this._range);
+        setPData("suits", this._suits);        
+    }
+    _loadState() {
+        let suits = getPData("suits");
+        let range = getPData("range");
+        if (range !== undefined && suits !== undefined) {
+            this._suits = suits;
+            this._range = range;
+        }        
     }
 }
 

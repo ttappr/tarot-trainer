@@ -70,6 +70,7 @@ class Coach {
         if (this._conf) {
             this._conf.value = this._confDict[this._card_id];
         }
+        this._nextCard();
     }
     /**
      * Sets the widget used by the Coach to indicate the user's progress in 
@@ -80,6 +81,23 @@ class Coach {
     set progressMeter(pm) { 
         this._meter = pm;
         this._updateProg();
+    }
+    set configPanel(cp) {
+        this._configPanel = cp;
+        if (cp.initialized) {
+            this._range = cp.range;
+            this._suits = cp.suits;
+            this._updateFilteredWeights();
+        } else {
+            let oninit = (e) => {
+                this._range = e.detail.range;
+                this._suits = e.detail.suits;
+                this._updateFilteredWeights();
+            }
+            cp.addEventListener("initialized", 
+                                oninit.bind(this), 
+                                { once: true });
+        }
     }
     /**
      * Sets the widget used by the Coach to show the confidence level of the
@@ -139,19 +157,22 @@ class Coach {
         coach._reveal.disabled = false;
 
         coach._save();
+        coach._nextCard();
+    }
+    _nextCard() {
         // let ids = Object.keys(coach._wghtDict);
         // let wts = Object.values(coach._wghtDict);
-        let ids = Object.keys  (coach._wghtDictFilt);
-        let wts = Object.values(coach._wghtDictFilt);
+        let ids = Object.keys  (this._wghtDictFilt);
+        let wts = Object.values(this._wghtDictFilt);
 
         let cid = wchoice(ids, wts);
 
-        for (let i = 0; cid === coach._card_id && i < 10; i++) {
+        for (let i = 0; cid === this._card_id && i < 10; i++) {
             cid = ids[ Math.floor(Math.random() * wts.length) ];
         }
-        coach._card_id          = cid;
-        coach._deck.curCardID   = cid;
-        coach._conf.value       = coach._confDict[cid];
+        this._card_id          = cid;
+        this._deck.curCardID   = cid;
+        this._conf.value       = coach._confDict[cid];
     }
     _updateFilteredWeights() {
         // TODO - This is a bad solution as far as encapsulation is concerned.
@@ -257,8 +278,6 @@ class Coach {
         setPData("cardWeights",     this._wghtDict);
         setPData("cardConfidence",  this._confDict);
         setPData("data_version",    this._data_version);
-        setPData("range",           this._range);
-        setPData("suits",           this._suits);
     }
     _restore() {
         this._data_version = getPData("data_version");
@@ -270,13 +289,12 @@ class Coach {
         } else {
             this._wghtDict = getPData("cardWeights") || {};
             this._confDict = getPData("cardConfidence") || {};
-            let suits      = getPData("suits");
-            let range      = getPData("range");
-            if (range && suits) {
-                this._suits = suits;
-                this._range = range;
-            }
         }
     }
 }
-
+/**
+ * Reject invalid configurations.
+ * Open and close config.
+ * Persist the settings.
+ * Fix the meaning div so the drop down doesn't have that partial outline.
+ */
