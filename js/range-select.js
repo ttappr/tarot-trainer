@@ -110,13 +110,13 @@ class RangeSelect extends HTMLElement {
         let hiNote = rangeNote(this._rows[this._high]);
 
         // Example: "1 (Ace, Magician)  to  11 (Page, Justice)"
-        let val = `<b>${this._low}</b> ` +
-                  `<span class="bc"><i>(${loNote})</i></span>` + 
-                  `&nbsp;&nbsp;&nbsp;` + 
-                  `<i><b>to</b></i>` + 
-                  `&nbsp;&nbsp;&nbsp;` +
-                  `<b>${this._high}</b> ` + 
-                  `<span class="bc"><i>(${hiNote})</i></span>`;
+        let val = `<b>${this._low}</b> 
+                   <span class="bc"><i>(${loNote})</i></span>
+                   &nbsp;
+                   <i><b>to</b></i>
+                   &nbsp;
+                   <b>${this._high}</b> 
+                   <span class="bc"><i>(${hiNote})</i></span>`;
 
         // Display the string.
         this._value.innerHTML = val;
@@ -131,6 +131,7 @@ class RangeSelect extends HTMLElement {
         this.dispatchEvent(e);
     }
 }
+
 function rangeNote(tr) {
     let m = map    (tr.children, td => td.textContent.trim());
     let f = filter (m, t => t !== "");

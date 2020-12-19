@@ -20,7 +20,7 @@ class ConfigPanel extends HTMLElement {
         this._range = { start: -1, end: -1 };
         this._suits = { cups: false, swords: false, 
                         coins: false, rods: false,
-                        'major-arcana': false, reverse: false };
+                        major_arcana: false, reverse: false };
         this._load();
     }    
     async _load() {
@@ -37,7 +37,7 @@ class ConfigPanel extends HTMLElement {
         suit.oninput = this._onSuitInput.bind(this);
         this._suits  = {};
         for (let s of suits) {
-            this._suits[s.value] = s;
+            this._suits[s.value] = s.checked;
         }
         range.loaded = (range) => {
             this._populateRange(range);
@@ -64,18 +64,23 @@ class ConfigPanel extends HTMLElement {
     _onSuitInput(e) {
         // e.target.value in ['rods','swords','cups','coins','major-arcana', 
         //                    'reverse'].
-        console.info(`${e.target.value} checked: ${e.target.checked}`);
-        this._suits[e.target.value] = e.target.checked;
+        let suit    = e.target.value;
+        let checked = e.target.checked;
+        this._suits[suit] = checked;
+        this._dispatchSuitSelect(suit, checked);
     }
     _onRange(e) {
-        this._range.start = e.detail.start;
-        this._range.end = e.detail.end;
-        console.info(e.detail);
+        this._range = e.detail;
+        e = new CustomEvent("range", {
+            bubbles: true,
+            detail: { range: {...e.detail } }
+        });
+        this.dispatchEvent(e);
     }
-    _dispatchSuitSelect() {
+    _dispatchSuitSelect(suit, checked) {
         let e = new CustomEvent("suit", {
             bubbles: true,
-            detail: ""
+            detail: { suit: suit, checked: checked, allSuits: this.suits }
         });
         this.dispatchEvent(e);
     }

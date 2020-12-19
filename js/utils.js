@@ -100,3 +100,4 @@ function *slice(iterable, start, end) {
         i++;
     }
 }
+

@@ -22,12 +22,23 @@ class Coach {
      */
     constructor() {
         if (!_instance) {
-            _instance    = this;
-            this._meter  = null;
-            this._conf   = null;
-            this._next   = null;
-            this._reveal = null;
+            _instance           = this;
+            this._meter         = null;
+            this._conf          = null;
+            this._next          = null;
+            this._reveal        = null;
+            this._confDict      = {};
+            this._wghtDict      = {};
+            this._wghtDictFilt  = {}
+
+            this._range  = { start: 0, end: 21 };
+            this._suits  = { cups: true, swords: true, rods: true, coins: true,
+                             major_arcana: true, reverse: true };
+
             this._restore();
+
+            document.addEventListener('range', this._onRange.bind(this));
+            document.addEventListener('suit',  this._onSuit.bind(this));
         } else {
             throw Error("Use Coach.instance to get the Coach instance.");
         }
@@ -50,14 +61,14 @@ class Coach {
         this._deck  = d;
 
         for (let id of d.cardIDs) {
-            if (!this._iwdict[id]) {
-                this._iwdict[id] = 100;
-                this._icdict[id] = 0;
+            if (!this._wghtDict[id]) {
+                this._wghtDict[id] = 100;
+                this._confDict[id] = 0;
             }
         }
         this._card_id = d.curCardID;
         if (this._conf) {
-            this._conf.value = this._icdict[this._card_id];
+            this._conf.value = this._confDict[this._card_id];
         }
     }
     /**
@@ -80,7 +91,7 @@ class Coach {
         this._conf  = ci;
         ci.disabled = true;
         if (this._deck) {
-            ci.value = this._icdict[this._card_id];
+            ci.value = this._confDict[this._card_id];
         }
     }
     /**
@@ -104,9 +115,12 @@ class Coach {
      */
     static updateConfidence(value) {
         let coach = Coach.instance;
-        let id = coach._card_id;
-        coach._iwdict[id] = (100 - value) * 10 || 1;
-        coach._icdict[id] = +value;
+        let id    = coach._card_id;
+
+        coach._confDict[id]     = +value;
+        coach._wghtDict[id]     = // ...
+        coach._confDictFilt[id] = (100 - value) * 10 || 1;
+        
         coach._updateProg();
 
         // Update button state.
@@ -120,22 +134,84 @@ class Coach {
         coach._next = event.target;
         
         // Update button state.
-        coach._next.disabled = true;
-        coach._conf.disabled = true;
+        coach._next.disabled   = true;
+        coach._conf.disabled   = true;
         coach._reveal.disabled = false;
 
         coach._save();
-        let ids = Object.keys(coach._iwdict);
-        let wts = Object.values(coach._iwdict);
+        // let ids = Object.keys(coach._wghtDict);
+        // let wts = Object.values(coach._wghtDict);
+        let ids = Object.keys  (coach._wghtDictFilt);
+        let wts = Object.values(coach._wghtDictFilt);
 
         let cid = wchoice(ids, wts);
 
         for (let i = 0; cid === coach._card_id && i < 10; i++) {
             cid = ids[ Math.floor(Math.random() * wts.length) ];
         }
-        coach._card_id = cid;
-        coach._deck.curCardID = cid;
-        coach._conf.value = coach._icdict[cid];
+        coach._card_id          = cid;
+        coach._deck.curCardID   = cid;
+        coach._conf.value       = coach._confDict[cid];
+    }
+    _updateFilteredWeights() {
+        // TODO - This is a bad solution as far as encapsulation is concerned.
+        //        Rework the config code so the deck provides the specific 
+        //        names and IDs for things, rather than reproducing strings
+        //        in several places and hacking into ID's (which are supposed
+        //        to be opaque).
+        if (!Coach._ordMinor) {
+            Coach._ordMinor = [ 
+                '_', 'Ace', 'Two', 'Three', 'Four', 'Five', 
+                'Six', 'Seven', 'Eight', 'Nine', 'Ten', 
+                'Page', 'Knight', 'Queen', 'King'
+            ];
+            Coach._ordMajor = [ 
+                'Fool', 'Magician', 'High_Priestess', 'Empress', 
+                'Emperor', 'Hierophant', 'Lovers', 'Chariot', 
+                'Fortitude', 'Hermit', 'Weel_of_Fortune', 
+                'Justice', 'Hanged_Man', 'Death', 'Temperance', 
+                'Devil', 'Tower', 'Star', 'Moon', 'Sun', 
+                'Last_Judgement', 'World'
+            ];
+            Coach._filtExpr = 
+                new RegExp( "(?:The_)?(.*?)_of_" +
+                            "(Major_Arcana|Cups|Wands|Swords|Pentacles)" +
+                            "(_rev)?" );
+        }
+        let ordMinor = Coach._ordMinor;
+        let ordMajor = Coach._ordMajor;
+        let filtExpr = Coach._filtExpr;
+        let range    = this._range;
+        let suits    = this._suits;
+        let filt     = { 
+            Cups        : suits.cups,
+            Wands       : suits.rods,
+            Swords      : suits.swords,
+            Pentacles   : suits.coins,
+            Major_Arcana: suits.major_arcana,
+            _rev        : suits.reverse
+        };
+        
+        for (let ord = 0; ord < 22; ord++) {
+            if (ord >= range.start && ord <= range.end) {
+                filt[ordMajor[ord]] = true;
+                if (ord > 0 && ord < 15) {
+                    filt[ordMinor[ord]] = true;
+                }
+            } else {
+                filt[ordMajor[ord]] = false;
+                if (ord > 0 && ord < 15) {
+                    filt[ordMinor[ord]] = false;
+                }
+            }
+        }
+        this._wghtDictFilt = {};
+        for (let key in this._wghtDict) {
+            let [_, value, suit, rev] = key.match(filtExpr);
+            if (filt[value] && filt[suit] && (rev === undefined || filt[rev])) {
+                this._wghtDictFilt[key] = this._wghtDict[key];
+            }
+        }
     }
     /**
      * Requests the Coach to display the answer for the current flash card.
@@ -146,9 +222,9 @@ class Coach {
         coach._deck.revealAnswer();
 
         // Update button state.
-        coach._conf.disabled = false;
+        coach._conf.disabled   = false;
         coach._reveal.disabled = true;
-        coach._next.disabled = false;
+        coach._next.disabled   = false;
     }
     /**
      * Requests the coach to save the user's confidence scores for use in 
@@ -159,32 +235,47 @@ class Coach {
     }
     _updateProg() {
         if (this._meter) {
-            let accm = accumulate(Object.values(this._icdict));
+            let accm = accumulate(Object.values(this._confDict));
             if (accm.length !== 0) {
-                let total = accm[accm.length - 1];
-                let possible = 100 * accm.length;
-
-                this._meter.value = total / possible;
+                let total           = accm[accm.length - 1];
+                let possible        = 100 * accm.length;
+                this._meter.value   = total / possible;
             } else {
                 this._meter.value = 0;
             }
         }
     }
+    _onRange(e) {
+        this._range = e.detail.range;
+        this._updateFilteredWeights();
+    }
+    _onSuit(e) {
+        this._suits = e.detail.allSuits;
+        this._updateFilteredWeights();
+    }
     _save() {
-        setPData("cardWeights", this._iwdict);
-        setPData("cardConfidence", this._icdict);
-        setPData("data_version", this._data_version);
+        setPData("cardWeights",     this._wghtDict);
+        setPData("cardConfidence",  this._confDict);
+        setPData("data_version",    this._data_version);
+        setPData("range",           this._range);
+        setPData("suits",           this._suits);
     }
     _restore() {
         this._data_version = getPData("data_version");
         if (this._data_version !== _DATA_VERSION) {
             clearPData();
             this._data_version = _DATA_VERSION;
-            this._iwdict  = {};
-            this._icdict  = {};
+            this._wghtDict = {};
+            this._confDict = {};
         } else {
-            this._iwdict = getPData("cardWeights") || {};
-            this._icdict = getPData("cardConfidence") || {};
+            this._wghtDict = getPData("cardWeights") || {};
+            this._confDict = getPData("cardConfidence") || {};
+            let suits      = getPData("suits");
+            let range      = getPData("range");
+            if (range && suits) {
+                this._suits = suits;
+                this._range = range;
+            }
         }
     }
 }

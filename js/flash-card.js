@@ -8,16 +8,19 @@ class FlashCard {
      * Constructor - creates an FlashCard instance.
      * @param {string} suit     One of Wands, Cups, Swords, Pentacles.
      * @param {string} value    The numerical value of the card, written out.
+     * @param {string} ordinal  The ordinal value of the card. 1 - 14 for minor
+     *                          cards, and 0 - 21 for major.
      * @param {string} pic      The path to the image file for the card.
      * @param {string} descr    A description of the card.
      * @param {string} meaning  The divinatory meaning of the card rightside up.
      * @param {string} reverse  The meaning of the card upside down.
      */
-    constructor(suit, value, pic, descr, meaning, reverse) {
+    constructor(suit, value, ordinal, pic, descr, meaning, reverse) {
         Object.assign(
             this, {
                 _suit: suit,
                 _value: value,
+                _ordinal: ordinal,
                 _pic: pic,
                 _descr: descr,
                 _meaning: meaning,
@@ -58,6 +61,9 @@ class FlashCard {
             this._id = this.name.replace(/ /g, '_');
         }
         return this._id;
+    }
+    get ordinal() {
+        return this._ordinal;
     }
     /**
      * Set to true, to position the card upside down. 
@@ -137,8 +143,9 @@ class FlashCardDeck extends HTMLElement {
         let data = JSON.parse(await loadText("./data/card-data.json"));
 
         for (let obj of data) {
-            let card = new FlashCard(...Object.values(obj));
-
+            // suit, value, ordinal, pic, descr, meaning, reverse
+            let card = new FlashCard(obj.suit, obj.value, obj.ordinal, obj.pic,
+                                     obj.descr, obj.meaning, obj.reverse);
             this._cards[card.id] = [card, false];
             this._cards[card.id + '_rev'] = [card, true];
         }
@@ -146,6 +153,11 @@ class FlashCardDeck extends HTMLElement {
         let [c, r] = Object.values(this._cards)[i];
         c.reversed = r;
         this._setCard(c);
+
+        // Returned by cards property. Protects the internal list from direct
+        // modification by client code.
+        this._cardsProxy = new Proxy({}, { get: (_, id) => this._cards[id] });
+
         Coach.instance.deck = this;
     }
     /**
@@ -204,12 +216,20 @@ class FlashCardDeck extends HTMLElement {
         return this._current;
     }
     /**
+     * Returns a Proxy for the internal list of cards indexed on card ID.
+     * @returns {Proxy<FlashCards[]>} A proxy for the internal cards list.
+     */
+    get cards() {
+        return this._cardsProxy;
+    }
+
+    /**
      * Causes the card's back with the answer to be displayed.
      */
     revealAnswer() {
         // TODO - This fade-in code might be cleaned up a bit.
         let child = this._back.firstChild;
-        let back = this._back;
+        let back  = this._back;
         back.removeChild(child);
         child.classList.add("fade-in");
         back.style.visibility = "visible";
