@@ -115,7 +115,7 @@ class ConfigPanel extends HTMLElement {
     _loadState() {
         let suits = getPData("suits");
         let range = getPData("range");
-        if (range !== undefined && suits !== undefined) {
+        if (range !== null && suits !== null) {
             this._suits = suits;
             this._range = range;
         }        
